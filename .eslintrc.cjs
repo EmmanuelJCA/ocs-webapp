@@ -85,9 +85,11 @@ module.exports = {
             'custom-components',
             'custom-types',
             'internal',
+            'parent',
+            'sibling',
+            'index',
+            'object',
           ],
-          ['parent', 'sibling', 'index'],
-          'object',
           'unknown',
         ],
         'custom-groups': {
