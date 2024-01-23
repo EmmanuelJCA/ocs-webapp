@@ -1,15 +1,12 @@
-import { Helmet } from 'react-helmet-async';
-
 import { HomeView } from './view';
+import { Seo } from '@/components';
 
 // ----------------------------------------------------------------------
 
 const HomePage = () => {
   return (
     <>
-      <Helmet>
-        <title>App | Home</title>
-      </Helmet>
+      <Seo name="Inicio" />
 
       <HomeView />
     </>

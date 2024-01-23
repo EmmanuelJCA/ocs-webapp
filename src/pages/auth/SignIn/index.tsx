@@ -1,5 +1,4 @@
-import { Helmet } from 'react-helmet-async';
-
+import { Seo } from '@/components';
 import { SignInView } from './view';
 
 // ----------------------------------------------------------------------
@@ -7,9 +6,7 @@ import { SignInView } from './view';
 const SignInPage = () => {
   return (
     <>
-      <Helmet>
-        <title>App | Sign in</title>
-      </Helmet>
+      <Seo name="Ingresar" />
 
       <SignInView />
     </>
