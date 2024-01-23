@@ -12,13 +12,15 @@ export default defineConfig(({ mode }) => {
       react(),
       VitePWA({
         manifest: {
-          name: 'App',
-          description: 'App description',
+          name: 'Oncological Control System',
+          short_name: 'OCS',
+          description:
+            'Oncological Control System, la app para el control de tratamientos y pacientes oncológicos',
           theme_color: '#000000',
           background_color: '#ffffff',
           display: 'standalone',
-          lang: 'en-US',
-          start_url: '/',
+          lang: 'es-ES',
+          start_url: '/favicon/',
           icons: [
             {
               src: 'android-chrome-192x192.png',

@@ -1,7 +1,9 @@
 {
-  "name": "template-webapp",
+  "name": "ocs-webapp",
   "private": true,
   "version": "0.0.0",
+  "description": "Oncological Control System, the app for controlling cancer treatments and patients",
+  "author": "Emmanuel Cañate <emmanuelcanate@gmail.com>",
   "type": "module",
   "scripts": {
     "dev": "vite",

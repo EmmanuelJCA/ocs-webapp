@@ -7,7 +7,7 @@
 
 <p align="center">The library for web and native user interfaces</p>
 
-# Template App
+# Oncological Control System
 
 ## Environment Variables
 1. Clone the .env.template file and rename it to .env.
