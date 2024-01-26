@@ -1,14 +1,15 @@
 import { alpha, useTheme } from '@mui/material/styles';
-import { Box, Card, Link, Stack, Typography } from '@mui/material';
+import { Box, Link, Stack, Typography } from '@mui/material';
 
+import { useResponsive } from '@/hooks';
 import { bgGradient } from '@/theme/css';
-
 import { SignInForm } from '../components';
 
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
   const theme = useTheme();
+  const mdUp = useResponsive('up', 'md');
 
   return (
     <Box
@@ -19,25 +20,54 @@ export default function LoginView() {
         height: 1,
       }}
     >
-      <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
-        <Card
-          sx={{
-            p: 5,
-            width: 1,
-            maxWidth: 420,
-          }}
+      <Box
+        component="img"
+        src="/assets/logo.svg"
+        sx={{ position: 'absolute', height: 40, margin: { xs: 2, md: 5 } }}
+      />
+      <Stack
+        alignItems="center"
+        justifyContent="space-between"
+        flexDirection="row"
+        sx={{ height: 1 }}
+      >
+        {mdUp && (
+          <Stack alignItems="center" gap={8} flexGrow={3}>
+            <Typography variant="h3">Oncological Control System</Typography>
+            <Box
+              height={{ md: '520px', lg: '620px', xl: '720px' }}
+              component="img"
+              src="/assets/illustrations/icons-1.png"
+            />
+          </Stack>
+        )}
+
+        <Stack
+          sx={{ bgcolor: '#fff', height: 1 }}
+          alignItems="center"
+          maxWidth={{ md: '480px' }}
+          flexGrow={1}
         >
-          <Typography variant="h4">Sign in to App</Typography>
+          <Box
+            sx={{
+              p: { xs: 2, md: 5 },
+              mt: 20,
+              width: 1,
+              maxWidth: 420,
+            }}
+          >
+            <Typography variant="h4">Ingresar a OCS</Typography>
 
-          <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-            Don’t have an account?
-            <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-              Get started
-            </Link>
-          </Typography>
+            <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
+              ¿No estas registrado?
+              <Link variant="subtitle2" sx={{ ml: 0.5 }}>
+                Crear cuenta
+              </Link>
+            </Typography>
 
-          <SignInForm />
-        </Card>
+            <SignInForm />
+          </Box>
+        </Stack>
       </Stack>
     </Box>
   );

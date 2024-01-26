@@ -28,7 +28,7 @@ const SignInForm = () => {
       router.push('/');
     } catch (error) {
       httpErrorHandler(error, {
-        NOT_FOUND: 'Email or password is incorrect',
+        NOT_FOUND: 'Correo o contraseña incorrectos',
       });
     }
   };
@@ -37,13 +37,13 @@ const SignInForm = () => {
     <Box component="form" onSubmit={handleSubmit(signIn)}>
       <Stack spacing={3}>
         <TextField
-          label="Email address"
+          label="Correo electrónico"
           type="email"
           {...register('email', {
-            required: 'this field is required',
+            required: 'éste campo es requerido',
             pattern: {
               value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-              message: 'invalid email address',
+              message: 'correo no valido',
             },
           })}
           error={!!errors.email}
@@ -51,15 +51,10 @@ const SignInForm = () => {
         />
 
         <TextField
-          label="Password"
+          label="Contraseña"
           type="password"
           {...register('password', {
-            required: 'this field is required',
-            minLength: { value: 6, message: 'minium 6 characters' },
-            pattern: {
-              value: /^[^\s]+$/,
-              message: 'space not allowed',
-            },
+            required: 'éste campo es requerido',
           })}
           error={!!errors.password}
           helperText={errors.password?.message}
@@ -68,7 +63,7 @@ const SignInForm = () => {
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }}>
         <Link variant="subtitle2" underline="hover">
-          Forgot password?
+          ¿Olvidaste tu contraseña?
         </Link>
       </Stack>
 
@@ -80,7 +75,7 @@ const SignInForm = () => {
         color="inherit"
         disabled={isLoading}
       >
-        Login
+        Ingresar
       </Button>
     </Box>
   );
