@@ -7,7 +7,7 @@ import { SignInForm } from '../components';
 
 // ----------------------------------------------------------------------
 
-export default function LoginView() {
+export default function SignInView() {
   const theme = useTheme();
   const mdUp = useResponsive('up', 'md');
 
