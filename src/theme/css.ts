@@ -1,7 +1,7 @@
-import { Theme, alpha } from '@mui/material/styles';
 import { dividerClasses } from '@mui/material/Divider';
 import { checkboxClasses } from '@mui/material/Checkbox';
 import { menuItemClasses } from '@mui/material/MenuItem';
+import { Theme, alpha, SxProps } from '@mui/material/styles';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
 
 // ----------------------------------------------------------------------
@@ -76,7 +76,7 @@ interface BgBlurProps {
   imgUrl?: string;
 }
 
-export function bgBlur(props: BgBlurProps) {
+export function bgBlur(props: BgBlurProps): SxProps {
   const { color = '#000000', blur = 6, opacity = 0.8, imgUrl } = props;
 
   if (imgUrl) {

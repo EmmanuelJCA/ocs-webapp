@@ -1,5 +1,5 @@
 import { alpha, useTheme } from '@mui/material/styles';
-import { Box, Link, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 import { useResponsive } from '@/hooks';
 import { bgGradient } from '@/theme/css';
@@ -56,15 +56,9 @@ export default function SignInView() {
               maxWidth: 420,
             }}
           >
-            <Typography variant="h4">Ingresar a OCS</Typography>
-
-            <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-              ¿No estas registrado?
-              <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-                Crear cuenta
-              </Link>
+            <Typography variant="h4" mb={4}>
+              Ingresar a OCS
             </Typography>
-
             <SignInForm />
           </Box>
         </Stack>

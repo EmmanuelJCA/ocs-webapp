@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, RouteObject } from 'react-router-dom';
 
-import MainLayout from '@/layouts/Main';
+import DashboardLayout from '@/layouts/Dashboard';
 import { RequireAuth } from '@/router/components';
 
 // ----------------------------------------------------------------------
@@ -12,11 +12,11 @@ const MainRoutes: RouteObject = {
   path: '/',
   element: (
     <RequireAuth>
-      <MainLayout>
+      <DashboardLayout>
         <Suspense>
           <Outlet />
         </Suspense>
-      </MainLayout>
+      </DashboardLayout>
     </RequireAuth>
   ),
   children: [

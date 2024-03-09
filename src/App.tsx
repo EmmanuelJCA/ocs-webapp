@@ -1,6 +1,7 @@
 import { SnackbarProvider } from 'notistack';
 import { Provider as ReduxProvider } from 'react-redux';
 
+import './global.css';
 import Router from './router';
 import ThemeProvider from './theme';
 import { store } from './redux/store';
