@@ -18,6 +18,11 @@ const navConfig: NavItem[] = [
     path: '/',
     icon: icon('ic_home'),
   },
+  {
+    title: 'Administración de Usuarios',
+    path: '/admin/users',
+    icon: icon('ic_users'),
+  },
 ];
 
 export default navConfig;
