@@ -24,7 +24,7 @@ const RequireAuth: FC<Props> = ({ allowedRoles, children }) => {
 
   if (isLoading) return <>Loading...</>;
 
-  return user && (!allowedRoles || allowedRoles.includes(user.role)) ? (
+  return user && (!allowedRoles || user.roles.some((role) => allowedRoles.includes(role))) ? (
     children
   ) : user ? (
     <Navigate to="/" replace />
