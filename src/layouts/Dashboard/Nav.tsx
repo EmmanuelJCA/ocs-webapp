@@ -1,5 +1,15 @@
-import { FC, useEffect } from 'react';
-import { Box, alpha, Stack, Avatar, Drawer, Typography, ListItemButton } from '@mui/material';
+import { FC, useState, useEffect } from 'react';
+import {
+  Box,
+  List,
+  alpha,
+  Stack,
+  Avatar,
+  Drawer,
+  Collapse,
+  Typography,
+  ListItemButton,
+} from '@mui/material';
 
 import { NAV } from './config';
 import { useResponsive } from '@/hooks';
@@ -7,7 +17,7 @@ import { usePathname } from '@/router/hooks';
 import { Logo, Scrollbar } from '@/components';
 import { useAppSelector } from '@/redux/store';
 import { Link as RouterLink } from '@/router/components';
-import navConfig, { NavItem as NavItemType } from './NavConfig';
+import navConfig, { icon, NavItem as NavItemType } from './NavConfig';
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +58,7 @@ const Nav: FC<NavProps> = ({ openNav, onCloseNav }) => {
         <Typography variant="subtitle2">{`${user?.firstName} ${user?.lastName}`}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {user?.role}
+          {/* {user?.role} */}
         </Typography>
       </Box>
     </Box>
@@ -57,7 +67,7 @@ const Nav: FC<NavProps> = ({ openNav, onCloseNav }) => {
   const renderMenu = (
     <Stack component="nav" spacing={0.5} sx={{ px: 2 }}>
       {navConfig.map((item) => (
-        <NavItem key={item.title} item={item} />
+        <NavItem key={item.title} item={item} activePath={pathname} />
       ))}
     </Stack>
   );
@@ -124,12 +134,15 @@ export default Nav;
 
 interface NavItemProps {
   item: NavItemType;
+  activePath: string;
 }
 
-const NavItem: FC<NavItemProps> = ({ item }) => {
-  const pathname = usePathname();
+const renderNavItem = ({ item, activePath }: NavItemProps) => {
+  let active = item.path === activePath;
 
-  const active = item.path === pathname;
+  if (item.children) {
+    active = item.children.some((child) => child.path === activePath);
+  }
 
   return (
     <ListItemButton
@@ -145,18 +158,45 @@ const NavItem: FC<NavItemProps> = ({ item }) => {
         ...(active && {
           color: 'primary.main',
           fontWeight: 'fontWeightSemiBold',
-          bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
-          '&:hover': {
-            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.16),
-          },
+          ...(item.icon && {
+            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
+            '&:hover': {
+              bgcolor: (theme) => alpha(theme.palette.primary.main, 0.16),
+            },
+          }),
         }),
       }}
     >
       <Box component="span" sx={{ width: 24, height: 24, mr: 2 }}>
-        {item.icon}
+        {item.icon ?? icon(active ? 'ic_dot_active' : 'ic_dot')}
       </Box>
 
-      <Box component="span">{item.title} </Box>
+      <Box component="span">{item.title}</Box>
     </ListItemButton>
+  );
+};
+
+export const NavItem: FC<NavItemProps> = ({ item, activePath }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  if (!item.children) {
+    return renderNavItem({ item, activePath });
+  }
+
+  return (
+    <>
+      <Box onClick={handleClick}>{renderNavItem({ item, activePath })}</Box>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          {item.children.map((child) => (
+            <NavItem key={child.title} item={child} activePath={activePath} />
+          ))}
+        </List>
+      </Collapse>
+    </>
   );
 };

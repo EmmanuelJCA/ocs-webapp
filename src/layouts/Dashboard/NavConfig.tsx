@@ -5,10 +5,11 @@ import { SvgColor } from '@/components';
 export interface NavItem {
   title: string;
   path: string;
-  icon: JSX.Element;
+  icon?: JSX.Element;
+  children?: NavItem[];
 }
 
-const icon = (name: string) => (
+export const icon = (name: string) => (
   <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
 );
 
@@ -19,9 +20,15 @@ const navConfig: NavItem[] = [
     icon: icon('ic_home'),
   },
   {
-    title: 'Administración de Usuarios',
-    path: '/admin/users',
-    icon: icon('ic_users'),
+    title: 'Administración',
+    path: '#',
+    icon: icon('ic_admin'),
+    children: [
+      {
+        title: 'Usuarios',
+        path: '/admin/users',
+      },
+    ],
   },
 ];
 
