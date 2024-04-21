@@ -1,3 +1,4 @@
+import { merge } from 'lodash';
 import { Box } from '@mui/material';
 import { FC, useState, forwardRef } from 'react';
 import {
@@ -35,31 +36,29 @@ const DataTable = forwardRef<HTMLDivElement, DataGridProps>((props, ref) => {
     quickFilterValues: [''],
   });
 
-  return (
-    <DataGrid
-      {...props}
-      ref={ref}
-      filterModel={filterModel}
-      onFilterModelChange={setFilterModel}
-      slots={{
-        toolbar: CustomToolbar,
-      }}
-      slotProps={{
-        toolbar: {
-          showQuickFilter: true,
+  const mergedProps = merge({}, props, {
+    filterModel,
+    onFilterModelChange: setFilterModel,
+    slots: {
+      toolbar: CustomToolbar,
+    },
+    slotProps: {
+      toolbar: {
+        showQuickFilter: true,
+      },
+    },
+    initialState: {
+      pagination: {
+        paginationModel: {
+          pageSize: 10,
         },
-      }}
-      initialState={{
-        pagination: {
-          paginationModel: {
-            pageSize: 10,
-          },
-        },
-      }}
-      pageSizeOptions={[5, 10]}
-      localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-    />
-  );
+      },
+    },
+    pageSizeOptions: [5, 10],
+    localeText: esES.components.MuiDataGrid.defaultProps.localeText,
+  });
+
+  return <DataGrid {...mergedProps} ref={ref} />;
 });
 
 export default DataTable;
