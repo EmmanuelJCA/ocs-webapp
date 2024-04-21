@@ -1,4 +1,5 @@
 import { Role } from './role';
+import { OncologyCenter } from '.';
 
 // ----------------------------------------------------------------------
 
@@ -21,4 +22,5 @@ export interface User {
   email: string;
   avatar: string;
   phone: string;
+  oncologyCenters: OncologyCenter[];
 }
