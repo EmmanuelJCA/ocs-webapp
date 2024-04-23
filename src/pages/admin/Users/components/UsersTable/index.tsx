@@ -51,7 +51,10 @@ const columns: GridColDef<User>[] = [
     minWidth: 150,
     headerName: 'Centros oncológicos',
     filterOperators: oncologyCenterFilterOperators,
-    valueFormatter: ({ value }) => value.map((oc: OncologyCenter) => oc.name).join(', '),
+    valueFormatter: (value?: OncologyCenter[]) => {
+      if (!value) return '';
+      return value.map((oc) => oc.name).join(', ');
+    },
     renderCell: ({ row }) => {
       return <OncologyCentersDialog oncologyCenters={row.oncologyCenters} />;
     },
@@ -63,7 +66,10 @@ const columns: GridColDef<User>[] = [
     minWidth: 150,
     headerName: 'Roles',
     filterOperators: roleFilterOperators,
-    valueFormatter: ({ value }) => value.map((r: Role) => RoleInSpanish[r]).toString(),
+    valueFormatter: (value?: Role[]) => {
+      if (!value) return '';
+      return value.map((r) => RoleInSpanish[r]).toString();
+    },
     renderCell: ({ row }) => {
       return <RoleDialog roles={row.roles} />;
     },
@@ -75,7 +81,10 @@ const columns: GridColDef<User>[] = [
     flex: 2,
     minWidth: 150,
     headerName: 'Fecha de nacimiento',
-    valueFormatter: ({ value }) => formatDate(value),
+    valueFormatter: (value?: string) => {
+      if (!value) return '';
+      return formatDate(value);
+    },
   },
   {
     field: 'inactivatedAt',
@@ -83,7 +92,7 @@ const columns: GridColDef<User>[] = [
     flex: 1,
     minWidth: 150,
     headerName: 'Activo',
-    valueGetter: ({ value }) => value == null,
+    valueGetter: (value) => value == null,
     renderCell: ({ row }) => {
       return row.inactivatedAt == null ? (
         <CheckCircleOutline color="success" />

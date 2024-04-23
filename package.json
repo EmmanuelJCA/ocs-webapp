@@ -42,7 +42,6 @@
     "@vitejs/plugin-react": "^4.2.1",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^9.1.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-perfectionist": "^2.9.0",

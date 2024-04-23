@@ -1,8 +1,8 @@
 import { merge } from 'lodash';
 import { Box } from '@mui/material';
+import { esES } from '@mui/x-data-grid/locales';
 import { FC, useState, forwardRef } from 'react';
 import {
-  esES,
   DataGrid,
   DataGridProps,
   GridFilterModel,
