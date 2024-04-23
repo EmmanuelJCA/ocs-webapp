@@ -7,7 +7,7 @@ import { SignInForm } from '../components';
 
 // ----------------------------------------------------------------------
 
-export default function SignInView() {
+export const SignInView = () => {
   const theme = useTheme();
   const mdUp = useResponsive('up', 'md');
 
@@ -65,4 +65,4 @@ export default function SignInView() {
       </Stack>
     </Box>
   );
-}
+};

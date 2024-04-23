@@ -13,7 +13,7 @@ interface Props {
   onOpenNav: VoidFunction;
 }
 
-const Header: FC<Props> = ({ onOpenNav }) => {
+export const Header: FC<Props> = ({ onOpenNav }) => {
   const theme = useTheme();
 
   const lgUp = useResponsive('up', 'lg');
@@ -25,8 +25,6 @@ const Header: FC<Props> = ({ onOpenNav }) => {
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
       )}
-
-      {/* <Searchbar /> */}
 
       <Box sx={{ flexGrow: 1 }} />
 
@@ -67,5 +65,3 @@ const Header: FC<Props> = ({ onOpenNav }) => {
     </AppBar>
   );
 };
-
-export default Header;

@@ -11,7 +11,7 @@ interface Props {
   type?: string;
 }
 
-const Seo: FC<Props> = (props) => {
+export const Seo: FC<Props> = (props) => {
   const {
     title = 'OCS',
     name = '',
@@ -41,5 +41,3 @@ const Seo: FC<Props> = (props) => {
     </Helmet>
   );
 };
-
-export default Seo;

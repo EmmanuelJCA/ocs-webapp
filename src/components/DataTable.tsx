@@ -29,7 +29,6 @@ const CustomToolbar: FC<GridToolbarContainerProps> = (props) => {
   );
 };
 
-// eslint-disable-next-line react/display-name
 const DataTable = forwardRef<HTMLDivElement, DataGridProps>((props, ref) => {
   const [filterModel, setFilterModel] = useState<GridFilterModel>({
     items: [],
@@ -61,4 +60,6 @@ const DataTable = forwardRef<HTMLDivElement, DataGridProps>((props, ref) => {
   return <DataGrid {...mergedProps} ref={ref} />;
 });
 
-export default DataTable;
+DataTable.displayName = 'DataTable';
+
+export { DataTable };

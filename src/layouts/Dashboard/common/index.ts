@@ -1,1 +1,1 @@
-export { default as AccountPopover } from './AccountPopover';
+export * from './AccountPopover';

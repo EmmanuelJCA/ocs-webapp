@@ -4,7 +4,6 @@ import { Icon, IconProps } from '@iconify/react';
 
 interface Props extends BoxProps, Omit<IconProps, keyof BoxProps> {}
 
-// eslint-disable-next-line react/display-name
 const Iconify = forwardRef<BoxProps, Props>(({ icon, width = 20, sx, ...other }, ref) => (
   <Box
     ref={ref}
@@ -16,4 +15,6 @@ const Iconify = forwardRef<BoxProps, Props>(({ icon, width = 20, sx, ...other },
   />
 ));
 
-export default Iconify;
+Iconify.displayName = 'Iconify';
+
+export { Iconify };

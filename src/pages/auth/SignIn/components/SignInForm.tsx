@@ -9,7 +9,7 @@ import { setUser, useSignInMutation } from '@/redux/features/auth';
 
 // ----------------------------------------------------------------------
 
-const SignInForm = () => {
+export const SignInForm = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -80,5 +80,3 @@ const SignInForm = () => {
     </Box>
   );
 };
-
-export default SignInForm;

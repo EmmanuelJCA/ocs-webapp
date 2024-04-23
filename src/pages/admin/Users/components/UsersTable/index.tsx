@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { Tooltip } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { Block, CheckCircleOutline } from '@mui/icons-material';
@@ -115,7 +116,7 @@ interface Props {
   users: User[];
 }
 
-const UsersTable = ({ users }: Props) => {
+export const UsersTable: FC<Props> = ({ users }) => {
   return (
     <DataTable
       initialState={{
@@ -131,5 +132,3 @@ const UsersTable = ({ users }: Props) => {
     />
   );
 };
-
-export default UsersTable;

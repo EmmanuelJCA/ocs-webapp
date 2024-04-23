@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box';
 import { FC, useState } from 'react';
 
-import Nav from './Nav';
-import Main from './Main';
-import Header from './Header';
+import { Nav } from './Nav';
+import { Main } from './Main';
+import { Header } from './Header';
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const DashboardLayout: FC<Props> = ({ children }) => {
+export const DashboardLayout: FC<Props> = ({ children }) => {
   const [openNav, setOpenNav] = useState(false);
 
   return (
@@ -32,5 +32,3 @@ const DashboardLayout: FC<Props> = ({ children }) => {
     </>
   );
 };
-
-export default DashboardLayout;

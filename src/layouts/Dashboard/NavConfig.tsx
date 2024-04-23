@@ -13,7 +13,7 @@ export const icon = (name: string) => (
   <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
 );
 
-const navConfig: NavItem[] = [
+export const navConfig: NavItem[] = [
   {
     title: 'inicio',
     path: '/',
@@ -31,5 +31,3 @@ const navConfig: NavItem[] = [
     ],
   },
 ];
-
-export default navConfig;

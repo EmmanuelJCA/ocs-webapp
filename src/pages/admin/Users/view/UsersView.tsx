@@ -5,7 +5,7 @@ import { Loader } from '@/components';
 import { UsersTable } from '../components';
 import { useGetUsersQuery } from '@/redux/features';
 
-const UserView = () => {
+export const UsersView = () => {
   const { data = [], isLoading } = useGetUsersQuery();
 
   if (isLoading) return <Loader />;
@@ -22,5 +22,3 @@ const UserView = () => {
     </Container>
   );
 };
-
-export default UserView;

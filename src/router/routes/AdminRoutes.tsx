@@ -3,7 +3,7 @@ import { Outlet, RouteObject } from 'react-router-dom';
 
 import { Role } from '@/types';
 import { RequireAuth } from '../components';
-import DashboardLayout from '@/layouts/Dashboard';
+import { DashboardLayout } from '@/layouts/Dashboard';
 
 // ----------------------------------------------------------------------
 

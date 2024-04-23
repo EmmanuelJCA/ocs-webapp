@@ -1,8 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, RouteObject } from 'react-router-dom';
 
-import DashboardLayout from '@/layouts/Dashboard';
 import { RequireAuth } from '@/router/components';
+import { DashboardLayout } from '@/layouts/Dashboard';
 
 // ----------------------------------------------------------------------
 

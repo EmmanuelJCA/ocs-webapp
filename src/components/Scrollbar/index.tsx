@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement>, SimpleBarProps {
   sx?: SxProps;
 }
 
-const Scrollbar: FC<Props> = memo(
+export const Scrollbar: FC<Props> = memo(
   forwardRef<BoxProps, Props>(({ children, sx, ...other }, ref) => {
     const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;
 
@@ -42,5 +42,3 @@ const Scrollbar: FC<Props> = memo(
     );
   })
 );
-
-export default Scrollbar;

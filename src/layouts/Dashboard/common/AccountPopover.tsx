@@ -31,7 +31,7 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export const AccountPopover = () => {
   const { user } = useAppSelector((state) => state.auth);
   const router = useRouter();
 
@@ -133,4 +133,4 @@ export default function AccountPopover() {
       </Popover>
     </>
   );
-}
+};

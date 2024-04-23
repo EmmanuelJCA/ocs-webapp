@@ -8,7 +8,7 @@ import { useResponsive } from '@/hooks';
 
 const SPACING = 8;
 
-const Main: FC<BoxProps> = ({ children, sx, ...other }) => {
+export const Main: FC<BoxProps> = ({ children, sx, ...other }) => {
   const lgUp = useResponsive('up', 'lg');
 
   return (
@@ -33,5 +33,3 @@ const Main: FC<BoxProps> = ({ children, sx, ...other }) => {
     </Box>
   );
 };
-
-export default Main;

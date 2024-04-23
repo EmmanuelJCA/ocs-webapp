@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
-export function usePathname() {
+export const usePathname = () => {
   const { pathname } = useLocation();
 
   return useMemo(() => pathname, [pathname]);
-}
+};

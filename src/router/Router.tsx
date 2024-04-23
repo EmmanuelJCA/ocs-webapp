@@ -4,10 +4,8 @@ import { AuthRoutes, MainRoutes, AdminRoutes, ErrorRoutes } from './routes';
 
 // ----------------------------------------------------------------------
 
-const Router = () => {
+export const Router = () => {
   const routes = useRoutes([AdminRoutes, AuthRoutes, MainRoutes, ErrorRoutes]);
 
   return routes;
 };
-
-export default Router;

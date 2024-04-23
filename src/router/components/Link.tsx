@@ -7,9 +7,10 @@ type LinkProps = {
   href: string;
 };
 
-// eslint-disable-next-line react/display-name
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(({ href, ...other }, ref) => (
   <RouterLink ref={ref} to={href} {...other} />
 ));
 
-export default Link;
+Link.displayName = 'Link';
+
+export { Link };

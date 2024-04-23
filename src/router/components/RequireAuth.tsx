@@ -12,7 +12,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const RequireAuth: FC<Props> = ({ allowedRoles, children }) => {
+export const RequireAuth: FC<Props> = ({ allowedRoles, children }) => {
   const userState = useAppSelector((state) => state.auth.user);
 
   const { data, isLoading } = useMeQuery(null, {
@@ -32,5 +32,3 @@ const RequireAuth: FC<Props> = ({ allowedRoles, children }) => {
     <Navigate to="/auth/signin" replace />
   );
 };
-
-export default RequireAuth;

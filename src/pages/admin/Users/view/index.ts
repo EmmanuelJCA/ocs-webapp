@@ -1,1 +1,1 @@
-export { default as UsersView } from './UsersView';
+export * from './UsersView';

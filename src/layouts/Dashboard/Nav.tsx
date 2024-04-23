@@ -17,7 +17,7 @@ import { usePathname } from '@/router/hooks';
 import { Logo, Scrollbar } from '@/components';
 import { useAppSelector } from '@/redux/store';
 import { Link as RouterLink } from '@/router/components';
-import navConfig, { icon, NavItem as NavItemType } from './NavConfig';
+import { icon, navConfig, NavItem as NavItemType } from './NavConfig';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ interface NavProps {
   onCloseNav: VoidFunction;
 }
 
-const Nav: FC<NavProps> = ({ openNav, onCloseNav }) => {
+export const Nav: FC<NavProps> = ({ openNav, onCloseNav }) => {
   const { user } = useAppSelector((state) => state.auth);
   const pathname = usePathname();
 
@@ -127,8 +127,6 @@ const Nav: FC<NavProps> = ({ openNav, onCloseNav }) => {
     </Box>
   );
 };
-
-export default Nav;
 
 // ----------------------------------------------------------------------
 

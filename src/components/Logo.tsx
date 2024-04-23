@@ -1,6 +1,5 @@
 import { forwardRef } from 'react';
 import Link from '@mui/material/Link';
-// import { useTheme } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 
 import { Link as RouterLink } from '@/router/components';
@@ -11,7 +10,6 @@ interface LogoProps extends BoxProps {
   disabledLink?: boolean;
 }
 
-// eslint-disable-next-line react/display-name
 const Logo = forwardRef<BoxProps, LogoProps>(({ disabledLink = false, sx, ...other }, ref) => {
   const logo = (
     <Box
@@ -34,4 +32,6 @@ const Logo = forwardRef<BoxProps, LogoProps>(({ disabledLink = false, sx, ...oth
   );
 });
 
-export default Logo;
+Logo.displayName = 'Logo';
+
+export { Logo };
