@@ -1,9 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Link, Stack, Button, TextField } from '@mui/material';
 
-import type { SignIn } from '@/types';
 import { useRouter } from '@/router/hooks';
+import { SignIn, SignInSchema } from '@/schemas/auth';
 import { httpErrorHandler, setLocalStorageItem } from '@/utils';
 import { setUser, useSignInMutation } from '@/redux/features/auth';
 
@@ -17,7 +18,14 @@ export const SignInForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignIn>();
+  } = useForm<SignIn>({
+    resolver: zodResolver(SignInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
   const [signInApi, { isLoading }] = useSignInMutation();
 
   const signIn = async (credentials: SignIn) => {
@@ -39,13 +47,7 @@ export const SignInForm = () => {
         <TextField
           label="Correo electrónico"
           type="email"
-          {...register('email', {
-            required: 'éste campo es requerido',
-            pattern: {
-              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-              message: 'correo no valido',
-            },
-          })}
+          {...register('email')}
           error={!!errors.email}
           helperText={errors.email?.message}
         />
@@ -53,9 +55,7 @@ export const SignInForm = () => {
         <TextField
           label="Contraseña"
           type="password"
-          {...register('password', {
-            required: 'éste campo es requerido',
-          })}
+          {...register('password')}
           error={!!errors.password}
           helperText={errors.password?.message}
         />
