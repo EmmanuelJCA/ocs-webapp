@@ -3,7 +3,7 @@ import { GridFilterOperator } from '@mui/x-data-grid';
 import { Role, User } from '@/types';
 import { RoleFilterInput } from './RoleFilterInput';
 
-export const roleFilterOperators: GridFilterOperator<User>[] = [
+export const roleFilterOperators: GridFilterOperator<User, Role[]>[] = [
   {
     label: 'alguno de',
     value: 'anyOf',
@@ -12,7 +12,7 @@ export const roleFilterOperators: GridFilterOperator<User>[] = [
         return null;
       }
       return (row) => {
-        return row.value.some((role: Role) => filterValue.includes(role));
+        return row.some((role: Role) => filterValue.includes(role));
       };
     },
     InputComponent: RoleFilterInput,
@@ -27,7 +27,7 @@ export const roleFilterOperators: GridFilterOperator<User>[] = [
         return null;
       }
       return (row) => {
-        return filterValue.every((fv: Role) => row.value.includes(fv));
+        return filterValue.every((fv: Role) => row.includes(fv));
       };
     },
     InputComponent: RoleFilterInput,

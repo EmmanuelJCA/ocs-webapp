@@ -1,4 +1,4 @@
-import { SyntheticEvent } from 'react';
+import { useMemo, SyntheticEvent } from 'react';
 import { GridFilterInputValueProps } from '@mui/x-data-grid';
 import { Checkbox, TextField, Autocomplete } from '@mui/material';
 import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
@@ -13,15 +13,22 @@ const options: { id: string; name: string }[] = [
 export const OncologyCenterFilterInput = (props: GridFilterInputValueProps) => {
   const { item, applyValue } = props;
 
+  const handleChange = (_event: SyntheticEvent, value: OncologyCenter[]) => {
+    applyValue({ ...item, value: value.map((v) => v.id) });
+  };
+
+  const value = useMemo(
+    () => item.value?.map((v: string) => options.find((o) => o.id === v)) || [],
+    [item.value]
+  );
+
   return (
     <Autocomplete
       multiple
       limitTags={1}
       options={options}
-      value={item.value?.map((v: string) => options.find((o) => o.id === v))}
-      onChange={(_event: SyntheticEvent, value: OncologyCenter[]) => {
-        applyValue({ ...item, value: value.map((v) => v.id) });
-      }}
+      value={value}
+      onChange={handleChange}
       disableCloseOnSelect
       getOptionLabel={(option) => option.name}
       renderOption={(props, option, { selected }) => (

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { Role } from '@/types';
+import { Loader } from '@/components';
 import { useAppSelector } from '@/redux/store';
 import { useMeQuery } from '@/redux/features/auth';
 
@@ -22,7 +23,7 @@ export const RequireAuth: FC<Props> = ({ allowedRoles, children }) => {
 
   const user = userState ? userState : data;
 
-  if (isLoading) return <>Loading...</>;
+  if (isLoading) return <Loader />;
 
   return user && (!allowedRoles || user.roles.some((role) => allowedRoles.includes(role))) ? (
     children

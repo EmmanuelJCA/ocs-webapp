@@ -3,11 +3,11 @@ import { Link as RouterLink } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
-type LinkProps = {
+type Props = {
   href: string;
 };
 
-const Link = forwardRef<HTMLAnchorElement, LinkProps>(({ href, ...other }, ref) => (
+const Link = forwardRef<HTMLAnchorElement, Props>(({ href, ...other }, ref) => (
   <RouterLink ref={ref} to={href} {...other} />
 ));
 

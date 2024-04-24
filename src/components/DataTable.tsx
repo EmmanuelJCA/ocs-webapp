@@ -41,11 +41,6 @@ const DataTable = forwardRef<HTMLDivElement, DataGridProps>((props, ref) => {
     slots: {
       toolbar: CustomToolbar,
     },
-    slotProps: {
-      toolbar: {
-        showQuickFilter: true,
-      },
-    },
     initialState: {
       pagination: {
         paginationModel: {

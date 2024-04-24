@@ -24,16 +24,19 @@ interface Props {
 export const RoleDialog = ({ roles }: Props) => {
   const [open, setOpen] = useState(false);
 
+  const rolesInSpanish = roles.map((r) => RoleInSpanish[r]);
+
   const handleClickOpen = () => {
     if (roles.length > 0) setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <>
-      <Tooltip title={roles.map((r) => RoleInSpanish[r]).toString()}>
+      <Tooltip title={rolesInSpanish.toString()}>
         <Button startIcon={<AdminPanelSettings />} onClick={handleClickOpen}>
           {roles.length}
         </Button>
@@ -53,7 +56,7 @@ export const RoleDialog = ({ roles }: Props) => {
           <Close />
         </IconButton>
         <List sx={{ pt: 0 }}>
-          {roles.map((role) => (
+          {rolesInSpanish.map((role) => (
             <ListItem disableGutters key={role}>
               <ListItemButton>
                 <ListItemAvatar>
@@ -61,7 +64,7 @@ export const RoleDialog = ({ roles }: Props) => {
                     <AdminPanelSettings />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={RoleInSpanish[role]} />
+                <ListItemText primary={role} />
               </ListItemButton>
               {/* TODO: Add role description and permissions */}
             </ListItem>

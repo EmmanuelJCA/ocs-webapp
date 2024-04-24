@@ -3,7 +3,7 @@ import { GridFilterOperator } from '@mui/x-data-grid';
 import { User, OncologyCenter } from '@/types';
 import { OncologyCenterFilterInput } from './OncologyCenterFilterInput';
 
-export const oncologyCenterFilterOperators: GridFilterOperator<User>[] = [
+export const oncologyCenterFilterOperators: GridFilterOperator<User, OncologyCenter[]>[] = [
   {
     label: 'alguno de',
     value: 'anyOf',
@@ -12,7 +12,7 @@ export const oncologyCenterFilterOperators: GridFilterOperator<User>[] = [
         return null;
       }
       return (row) => {
-        return row.value.some((oc: OncologyCenter) => filterValue.includes(oc.id));
+        return row.some((oc: OncologyCenter) => filterValue.includes(oc.id));
       };
     },
     InputComponent: OncologyCenterFilterInput,
@@ -27,8 +27,8 @@ export const oncologyCenterFilterOperators: GridFilterOperator<User>[] = [
         return null;
       }
       return (row) => {
-        return filterValue.every((fv: OncologyCenter) =>
-          row.value.map((rv: OncologyCenter) => rv.id).includes(fv)
+        return filterValue.every((fv: string) =>
+          row.map((rv: OncologyCenter) => rv.id).includes(fv)
         );
       };
     },
