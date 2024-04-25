@@ -3,8 +3,8 @@ import { GridColDef } from '@mui/x-data-grid';
 import { Tooltip, IconButton } from '@mui/material';
 import { Block, CheckCircleOutline } from '@mui/icons-material';
 
-import { formatDate } from '@/utils';
 import { Iconify, DataTable } from '@/components';
+import { formatDate, formatDateTime } from '@/utils';
 import { Link as RouterLink } from '@/router/components';
 import { RoleDialog, roleFilterOperators } from './RoleCol';
 import { User, Role, Genre, RoleInSpanish, OncologyCenter, genreInSpanish } from '@/types';
@@ -112,13 +112,7 @@ const columns: GridColDef<User>[] = [
       return row.inactivatedAt == null ? (
         <CheckCircleOutline color="success" />
       ) : (
-        <Tooltip
-          title={formatDate(row.inactivatedAt, {
-            weekday: 'long',
-            hour: 'numeric',
-            minute: 'numeric',
-          })}
-        >
+        <Tooltip title={formatDateTime(row.inactivatedAt)}>
           <Block color="error" />
         </Tooltip>
       );
