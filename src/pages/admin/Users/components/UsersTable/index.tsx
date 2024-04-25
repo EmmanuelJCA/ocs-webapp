@@ -1,10 +1,11 @@
 import { FC } from 'react';
-import { Tooltip } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
+import { Tooltip, IconButton } from '@mui/material';
 import { Block, CheckCircleOutline } from '@mui/icons-material';
 
 import { formatDate } from '@/utils';
-import { DataTable } from '@/components';
+import { Iconify, DataTable } from '@/components';
+import { Link as RouterLink } from '@/router/components';
 import { RoleDialog, roleFilterOperators } from './RoleCol';
 import { User, Role, Genre, RoleInSpanish, OncologyCenter, genreInSpanish } from '@/types';
 import { OncologyCentersDialog, oncologyCenterFilterOperators } from './OncologyCenterCol';
@@ -122,6 +123,18 @@ const columns: GridColDef<User>[] = [
         </Tooltip>
       );
     },
+  },
+  {
+    field: 'actions',
+    type: 'actions',
+    width: 80,
+    renderCell: ({ row }) => (
+      <Tooltip title="Editar">
+        <IconButton component={RouterLink} href={`/admin/users/${row.id}/edit`}>
+          <Iconify icon="solar:pen-bold" />
+        </IconButton>
+      </Tooltip>
+    ),
   },
 ];
 
