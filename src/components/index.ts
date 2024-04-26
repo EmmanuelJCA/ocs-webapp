@@ -5,3 +5,4 @@ export * from './Iconify';
 export * from './SvgColor';
 export * from './Scrollbar';
 export * from './DataTable';
+export * from './Breadcrumb';
