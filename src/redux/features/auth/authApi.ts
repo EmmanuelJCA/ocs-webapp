@@ -18,6 +18,7 @@ const authApiSlice = api.injectEndpoints({
     }),
     me: builder.query<User, null | void>({
       query: () => `${ENDPOINT}/me`,
+      providesTags: ['User'],
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled;
