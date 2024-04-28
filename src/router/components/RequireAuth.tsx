@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { Role } from '@/types';
+import { Loader } from '@/components';
 import { useAppSelector } from '@/redux/store';
 import { useMeQuery } from '@/redux/features/auth';
 
@@ -12,7 +13,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const RequireAuth: FC<Props> = ({ allowedRoles, children }) => {
+export const RequireAuth: FC<Props> = ({ allowedRoles, children }) => {
   const userState = useAppSelector((state) => state.auth.user);
 
   const { data, isLoading } = useMeQuery(null, {
@@ -22,9 +23,9 @@ const RequireAuth: FC<Props> = ({ allowedRoles, children }) => {
 
   const user = userState ? userState : data;
 
-  if (isLoading) return <>Loading...</>;
+  if (isLoading) return <Loader />;
 
-  return user && (!allowedRoles || allowedRoles.includes(user.role)) ? (
+  return user && (!allowedRoles || user.roles.some((role) => allowedRoles.includes(role))) ? (
     children
   ) : user ? (
     <Navigate to="/" replace />
@@ -32,5 +33,3 @@ const RequireAuth: FC<Props> = ({ allowedRoles, children }) => {
     <Navigate to="/auth/signin" replace />
   );
 };
-
-export default RequireAuth;

@@ -3,13 +3,14 @@ import { Link as RouterLink } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
-type LinkProps = {
+type Props = {
   href: string;
 };
 
-// eslint-disable-next-line react/display-name
-const Link = forwardRef<HTMLAnchorElement, LinkProps>(({ href, ...other }, ref) => (
+const Link = forwardRef<HTMLAnchorElement, Props>(({ href, ...other }, ref) => (
   <RouterLink ref={ref} to={href} {...other} />
 ));
 
-export default Link;
+Link.displayName = 'Link';
+
+export { Link };

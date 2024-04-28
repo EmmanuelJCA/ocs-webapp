@@ -1,15 +1,16 @@
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Link, Stack, Button, TextField } from '@mui/material';
 
-import type { SignIn } from '@/types';
 import { useRouter } from '@/router/hooks';
+import { SignIn, SignInSchema } from '@/schemas/auth';
 import { httpErrorHandler, setLocalStorageItem } from '@/utils';
 import { setUser, useSignInMutation } from '@/redux/features/auth';
 
 // ----------------------------------------------------------------------
 
-const SignInForm = () => {
+export const SignInForm = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -17,7 +18,14 @@ const SignInForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignIn>();
+  } = useForm<SignIn>({
+    resolver: zodResolver(SignInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
   const [signInApi, { isLoading }] = useSignInMutation();
 
   const signIn = async (credentials: SignIn) => {
@@ -28,7 +36,7 @@ const SignInForm = () => {
       router.push('/');
     } catch (error) {
       httpErrorHandler(error, {
-        NOT_FOUND: 'Email or password is incorrect',
+        NOT_FOUND: 'Correo o contraseña incorrectos',
       });
     }
   };
@@ -37,30 +45,17 @@ const SignInForm = () => {
     <Box component="form" onSubmit={handleSubmit(signIn)}>
       <Stack spacing={3}>
         <TextField
-          label="Email address"
+          label="Correo electrónico"
           type="email"
-          {...register('email', {
-            required: 'this field is required',
-            pattern: {
-              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-              message: 'invalid email address',
-            },
-          })}
+          {...register('email')}
           error={!!errors.email}
           helperText={errors.email?.message}
         />
 
         <TextField
-          label="Password"
+          label="Contraseña"
           type="password"
-          {...register('password', {
-            required: 'this field is required',
-            minLength: { value: 6, message: 'minium 6 characters' },
-            pattern: {
-              value: /^[^\s]+$/,
-              message: 'space not allowed',
-            },
-          })}
+          {...register('password')}
           error={!!errors.password}
           helperText={errors.password?.message}
         />
@@ -68,7 +63,7 @@ const SignInForm = () => {
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }}>
         <Link variant="subtitle2" underline="hover">
-          Forgot password?
+          ¿Olvidaste tu contraseña?
         </Link>
       </Stack>
 
@@ -80,10 +75,8 @@ const SignInForm = () => {
         color="inherit"
         disabled={isLoading}
       >
-        Login
+        Ingresar
       </Button>
     </Box>
   );
 };
-
-export default SignInForm;
