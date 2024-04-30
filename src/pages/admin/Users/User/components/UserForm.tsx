@@ -11,6 +11,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import {
   Box,
   Card,
+  Chip,
   Stack,
   Select,
   Button,
@@ -23,13 +24,14 @@ import {
   FormControl,
   Autocomplete,
   FormHelperText,
+  FormControlLabel,
 } from '@mui/material';
 
 import { Iconify } from '@/components';
 import { useRouter } from '@/router/hooks';
-import { httpErrorHandler, formatDate } from '@/utils';
-import { UserSchema, UserRequest } from '@/schemas/user';
+import { formatDate, httpErrorHandler } from '@/utils';
 import { formatDateTime } from '../../../../../utils/date';
+import { UserSchema, UserRequest, UpdateUserSchema } from '@/schemas/user';
 import { useAddUserMutation, useUpdateUserMutation } from '@/redux/features';
 import { Role, User, Genre, RoleInSpanish, genreInSpanish, OncologyCenter } from '@/types';
 
@@ -41,7 +43,7 @@ interface Props {
 
 const oncologyCenters = [
   {
-    id: '677ff2a1-dc73-4e47-922b-c60027b9f347',
+    id: 'a6db5381-7cf3-48a6-9108-44d55ee15b82',
     createdAt: new Date('2024-03-28T01:16:41.801Z'),
     updatedAt: new Date('2024-03-28T01:16:41.801Z'),
     inactivatedAt: null,
@@ -87,8 +89,9 @@ const UserForm: FC<Props> = ({ user }) => {
       phone: user ? user.phone : '',
       oncologyCentersIds: user ? user.oncologyCenters.map((oc) => oc.id) : [],
       avatar: user ? user.avatar : '',
+      isActive: user ? user.inactivatedAt == null : undefined,
     },
-    resolver: zodResolver(user ? UserSchema : UserSchema.partial({ password: true })),
+    resolver: zodResolver(user ? UpdateUserSchema : UserSchema),
   });
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -128,9 +131,17 @@ const UserForm: FC<Props> = ({ user }) => {
           <Card
             sx={(theme) => ({
               position: 'relative',
-              padding: theme.spacing(10, 3, 5),
+              padding: theme.spacing(8, 3, 5),
             })}
           >
+            {user && (
+              <Chip
+                sx={{ position: 'absolute', top: 24, right: 24 }}
+                label={user.inactivatedAt == null ? 'Activo' : 'Inactivo'}
+                color={user.inactivatedAt == null ? 'success' : 'error'}
+                variant="outlined"
+              />
+            )}
             <Box mb={2}>
               <div>
                 <Box
@@ -206,37 +217,35 @@ const UserForm: FC<Props> = ({ user }) => {
               <Typography variant="body2" color="textSecondary">
                 {watchUser.email}
               </Typography>
-              {/* <Box>
-                <Typography>
-                  Centros oncológicos: {watchUser.oncologyCentersIds?.toString()}
-                </Typography>
-                <Typography>Roles: {watchUser.roles?.toString()}</Typography>
-              </Box> */}
             </Stack>
-            <Box
-              sx={{
-                display: 'grid',
-                gap: theme.spacing(3, 2),
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                py: 2,
-              }}
-            >
-              <Typography fontSize={12}>
-                <strong>Documento:</strong>
-                <br /> {watchUser.identification}
-              </Typography>
-              <Typography fontSize={12}>
-                <strong>Teléfono:</strong>
-                <br /> {watchUser.phone}
-              </Typography>
-              <Typography fontSize={12}>
-                <strong>Fecha de nacimiento:</strong>
-                <br /> {formatDate(watchUser.dateOfBirth)}
-              </Typography>
-              <Typography fontSize={12}>
-                <strong>Género:</strong> {genreInSpanish[watchUser.genre]}
-              </Typography>
-            </Box>
+            <Stack width={1}>
+              <Box
+                sx={{
+                  display: 'inline-grid',
+                  gap: theme.spacing(3, 8),
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  py: 2,
+                  mx: 'auto',
+                }}
+              >
+                <Typography fontSize={12}>
+                  <strong>Documento:</strong>
+                  <br /> {watchUser.identification}
+                </Typography>
+                <Typography fontSize={12}>
+                  <strong>Teléfono:</strong>
+                  <br /> {watchUser.phone}
+                </Typography>
+                <Typography fontSize={12}>
+                  <strong>Fecha de nacimiento:</strong>
+                  <br /> {formatDate(watchUser.dateOfBirth)}
+                </Typography>
+                <Typography fontSize={12}>
+                  <strong>Género:</strong>
+                  <br /> {genreInSpanish[watchUser.genre]}
+                </Typography>
+              </Box>
+            </Stack>
           </Card>
           {user?.updatedAt && (
             <Typography variant="caption" color="textSecondary" pl={2}>
@@ -415,15 +424,31 @@ const UserForm: FC<Props> = ({ user }) => {
                 )}
               />
             </Box>
-            <Stack sx={{ mt: 3, flexDirection: 'column', alignItems: 'flex-end' }}>
+            <Stack sx={{ mt: 3, flexDirection: 'row', justifyContent: 'space-between' }}>
+              {user && (
+                <FormControlLabel
+                  control={
+                    <Controller
+                      name="isActive"
+                      control={control}
+                      render={({ field: props }) => (
+                        <Checkbox
+                          {...props}
+                          checked={props.value}
+                          onChange={(e) => props.onChange(e.target.checked)}
+                        />
+                      )}
+                    />
+                  }
+                  label="Activo"
+                />
+              )}
               <Button
                 type="submit"
                 variant="contained"
                 color="inherit"
                 disabled={isAdding || isUpdating}
-                onClick={() => {
-                  console.log({ watchUser, errors });
-                }}
+                sx={{ ml: 'auto' }}
               >
                 Guardar
               </Button>
