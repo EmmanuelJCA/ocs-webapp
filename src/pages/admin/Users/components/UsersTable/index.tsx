@@ -1,12 +1,13 @@
 import { FC } from 'react';
-import { Tooltip } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
+import { Tooltip, IconButton } from '@mui/material';
 import { Block, CheckCircleOutline } from '@mui/icons-material';
 
-import { formatDate } from '@/utils';
-import { DataTable } from '@/components';
+import { Iconify, DataTable } from '@/components';
+import { formatDate, formatDateTime } from '@/utils';
+import { Link as RouterLink } from '@/router/components';
 import { RoleDialog, roleFilterOperators } from './RoleCol';
-import { User, Role, RoleInSpanish, OncologyCenter } from '@/types';
+import { User, Role, Genre, RoleInSpanish, OncologyCenter, genreInSpanish } from '@/types';
 import { OncologyCentersDialog, oncologyCenterFilterOperators } from './OncologyCenterCol';
 
 const columns: GridColDef<User>[] = [
@@ -27,6 +28,19 @@ const columns: GridColDef<User>[] = [
     flex: 1,
     minWidth: 150,
     headerName: 'Cédula',
+  },
+  {
+    field: 'genre',
+    type: 'singleSelect',
+    flex: 2,
+    minWidth: 150,
+    headerName: 'Género',
+    getOptionLabel: (option) => genreInSpanish[option as Genre],
+    getOptionValue: (option) => option,
+    valueOptions: Object.values(Genre),
+    renderCell: ({ row }) => {
+      return genreInSpanish[row.genre];
+    },
   },
   {
     field: 'email',
@@ -98,17 +112,23 @@ const columns: GridColDef<User>[] = [
       return row.inactivatedAt == null ? (
         <CheckCircleOutline color="success" />
       ) : (
-        <Tooltip
-          title={formatDate(row.inactivatedAt, {
-            weekday: 'long',
-            hour: 'numeric',
-            minute: 'numeric',
-          })}
-        >
+        <Tooltip title={formatDateTime(row.inactivatedAt)}>
           <Block color="error" />
         </Tooltip>
       );
     },
+  },
+  {
+    field: 'actions',
+    type: 'actions',
+    width: 80,
+    renderCell: ({ row }) => (
+      <Tooltip title="Editar">
+        <IconButton component={RouterLink} href={`/admin/users/${row.id}/edit`}>
+          <Iconify icon="solar:pen-bold" />
+        </IconButton>
+      </Tooltip>
+    ),
   },
 ];
 
@@ -124,6 +144,7 @@ export const UsersTable: FC<Props> = ({ users }) => {
           columnVisibilityModel: {
             roles: false,
             dateOfBirth: false,
+            genre: false,
           },
         },
       }}

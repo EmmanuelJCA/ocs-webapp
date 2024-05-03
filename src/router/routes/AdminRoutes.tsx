@@ -8,6 +8,7 @@ import { DashboardLayout } from '@/layouts/Dashboard';
 // ----------------------------------------------------------------------
 
 export const UsersPage = lazy(() => import('@/pages/admin/Users'));
+export const UserPage = lazy(() => import('@/pages/admin/Users/User'));
 
 const AdminRoutes: RouteObject = {
   path: 'admin',
@@ -24,6 +25,14 @@ const AdminRoutes: RouteObject = {
     {
       path: 'users',
       element: <UsersPage />,
+    },
+    {
+      path: 'users/new',
+      element: <UserPage />,
+    },
+    {
+      path: 'users/:userId/edit',
+      element: <UserPage />,
     },
   ],
 };

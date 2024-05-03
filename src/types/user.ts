@@ -8,6 +8,11 @@ export enum Genre {
   FEMALE = 'F',
 }
 
+export const genreInSpanish = {
+  M: 'Masculino',
+  F: 'Femenino',
+};
+
 export interface User {
   id: string;
   createdAt: string;
