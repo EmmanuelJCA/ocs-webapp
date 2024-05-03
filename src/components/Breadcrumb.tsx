@@ -43,7 +43,7 @@ const getRouteName = (paths: string[], routeMap: Route): string | null => {
     }
 
     if (typeof currentMap === 'object' && currentMap[path]) {
-      routeName = currentMap[path].routeName;
+      routeName = (currentMap[path] as Route).routeName!;
       currentMap = currentMap[path];
     } else {
       break;
