@@ -27,11 +27,15 @@ import {
 
 import { Iconify } from '@/components';
 import { useRouter } from '@/router/hooks';
-import { httpErrorHandler, formatDate } from '@/utils';
+import { formatDate, httpErrorHandler } from '@/utils';
 import { UserSchema, UserRequest } from '@/schemas/user';
 import { formatDateTime } from '../../../../../utils/date';
-import { useAddUserMutation, useUpdateUserMutation } from '@/redux/features';
 import { Role, User, Genre, RoleInSpanish, genreInSpanish, OncologyCenter } from '@/types';
+import {
+  useAddUserMutation,
+  useUpdateUserMutation,
+  useGetOncologyCentersQuery,
+} from '@/redux/features';
 
 // ----------------------------------------------------------------------
 
@@ -39,32 +43,11 @@ interface Props {
   user?: User;
 }
 
-const oncologyCenters = [
-  {
-    id: '677ff2a1-dc73-4e47-922b-c60027b9f347',
-    createdAt: new Date('2024-03-28T01:16:41.801Z'),
-    updatedAt: new Date('2024-03-28T01:16:41.801Z'),
-    inactivatedAt: null,
-    name: 'San Lucas',
-    phone: '+584124567485',
-    email: 'sanlucas@ocs.com',
-    website: null,
-  },
-  {
-    id: '81307e16-dbf4-4916-acb8-d5f7a32c4c30',
-    createdAt: new Date('2024-04-18T12:36:04.435Z'),
-    updatedAt: new Date('2024-04-18T12:36:04.435Z'),
-    inactivatedAt: null,
-    name: 'Madrera Fols',
-    phone: '+584247895241',
-    email: 'madrerafols@ocs.com',
-    website: null,
-  },
-];
-
 const UserForm: FC<Props> = ({ user }) => {
   const router = useRouter();
   const theme = useTheme();
+
+  const { data = [] } = useGetOncologyCentersQuery();
 
   const {
     control,
@@ -384,11 +367,9 @@ const UserForm: FC<Props> = ({ user }) => {
                     limitTags={1}
                     disableCloseOnSelect
                     {...register('oncologyCentersIds')}
-                    value={
-                      field.value ? oncologyCenters.filter((oc) => field.value.includes(oc.id)) : []
-                    }
+                    value={field.value ? data.filter((oc) => field.value.includes(oc.id)) : []}
                     getOptionLabel={(option) => option.name}
-                    options={oncologyCenters}
+                    options={data}
                     onChange={(_event: SyntheticEvent, value: OncologyCenter[]) =>
                       field.onChange(value.map((v) => v.id))
                     }

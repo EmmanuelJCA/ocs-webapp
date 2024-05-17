@@ -41,8 +41,8 @@ const oncologyCentersApiSlice = api.injectEndpoints({
       invalidatesTags: ['OncologyCenters'],
     }),
     deleteOncologyCenter: builder.mutation<OncologyCenter, string>({
-      query: (OncologyCenterId) => ({
-        url: `${ENDPOINT}/${OncologyCenterId}`,
+      query: (oncologyCenterId) => ({
+        url: `${ENDPOINT}/${oncologyCenterId}`,
         method: 'DELETE',
       }),
     }),
