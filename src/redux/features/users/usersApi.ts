@@ -54,14 +54,14 @@ const usersApiSlice = api.injectEndpoints({
         formData.append('firstName', user.firstName);
         formData.append('lastName', user.lastName);
         formData.append('email', user.email);
-        formData.append('password', user.password);
+        if (user.password.length > 3) formData.append('password', user.password);
         formData.append('identification', user.identification);
         formData.append('genre', user.genre);
         formData.append('roles', user.roles.toString());
         formData.append('dateOfBirth ', user.dateOfBirth.toString());
         formData.append('phone', user.phone);
         formData.append('oncologyCentersIds', user.oncologyCentersIds.toString());
-        if (user.inactivatedAt) formData.append('inactivatedAt', user.inactivatedAt?.toString());
+        if (user.isActive != undefined) formData.append('isActive', user.isActive.toString());
         if (user.avatar instanceof File) formData.append('avatar', user.avatar);
 
         return {

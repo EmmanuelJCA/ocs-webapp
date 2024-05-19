@@ -23,13 +23,15 @@ export const UserSchema = z.object({
   oncologyCentersIds: z
     .array(z.string().uuid())
     .min(1, { message: 'Centros oncológicos requeridos' }),
-  avatar: imageSchema.or(z.string()).optional(),
+  // avatar: imageSchema.optional().or(z.string()).optional(),
+  avatar: z.string().nullable().or(imageSchema.nullable()),
+  isActive: z.boolean().optional(),
 });
 
-export const updateUserSchema = UserSchema.and(
+export const UpdateUserSchema = UserSchema.omit({ password: true }).and(
   z.object({
     isActive: z.boolean(),
-    password: z.string().email({ message: 'Correo electrónico requerido' }),
+    password: z.string().optional(),
   })
 );
 
