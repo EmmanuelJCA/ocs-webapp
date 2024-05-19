@@ -9,6 +9,7 @@ import { DashboardLayout } from '@/layouts/Dashboard';
 
 export const UsersPage = lazy(() => import('@/pages/admin/Users'));
 export const UserPage = lazy(() => import('@/pages/admin/Users/User'));
+export const OncologyCentersPage = lazy(() => import('@/pages/admin/OncologyCenters'));
 
 const AdminRoutes: RouteObject = {
   path: 'admin',
@@ -33,6 +34,10 @@ const AdminRoutes: RouteObject = {
     {
       path: 'users/:userId/edit',
       element: <UserPage />,
+    },
+    {
+      path: 'oncology-centers',
+      element: <OncologyCentersPage />,
     },
   ],
 };

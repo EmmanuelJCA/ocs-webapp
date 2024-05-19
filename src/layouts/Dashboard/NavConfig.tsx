@@ -28,6 +28,10 @@ export const navConfig: NavItem[] = [
         title: 'Usuarios',
         path: '/admin/users',
       },
+      {
+        title: 'Centros oncológicos',
+        path: '/admin/oncology-centers',
+      },
     ],
   },
 ];

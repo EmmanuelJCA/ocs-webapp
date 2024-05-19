@@ -20,6 +20,15 @@ const routeMap: Route = {
         routeName: 'Editar Usuario',
       },
     },
+    'oncology-centers': {
+      routeName: 'Administración de Centros oncológicos',
+      new: {
+        routeName: 'Crear Centros oncológico',
+      },
+      edit: {
+        routeName: 'Editar Centros oncológicos',
+      },
+    },
   },
   dashboard: {
     routeName: 'Dashboard',
