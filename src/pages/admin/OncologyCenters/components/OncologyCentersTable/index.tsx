@@ -6,7 +6,17 @@ import { Block, CheckCircleOutline } from '@mui/icons-material';
 import { formatDateTime } from '@/utils';
 import { OncologyCenter } from '@/types';
 import { Iconify, DataTable } from '@/components';
-import { Link as RouterLink } from '@/router/components';
+import { OncologyCenterForm } from '../OncologyCenterForm/OncologyCenterForm';
+
+const EditOncologyCenterButton = (props) => {
+  return (
+    <Tooltip title="Editar" {...props}>
+      <IconButton>
+        <Iconify icon="solar:pen-bold" />
+      </IconButton>
+    </Tooltip>
+  );
+};
 
 const columns: GridColDef<OncologyCenter>[] = [
   {
@@ -64,11 +74,7 @@ const columns: GridColDef<OncologyCenter>[] = [
     type: 'actions',
     width: 80,
     renderCell: ({ row }) => (
-      <Tooltip title="Editar">
-        <IconButton component={RouterLink} href={`/admin/oncology-centers/${row.id}/edit`}>
-          <Iconify icon="solar:pen-bold" />
-        </IconButton>
-      </Tooltip>
+      <OncologyCenterForm triggerComponent={EditOncologyCenterButton} oncologyCenter={row} />
     ),
   },
 ];
