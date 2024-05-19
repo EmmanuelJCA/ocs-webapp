@@ -136,10 +136,10 @@ interface NavItemProps {
 }
 
 const renderNavItem = ({ item, activePath }: NavItemProps) => {
-  let active = item.path === activePath;
+  let active = item.path === '/' ? activePath === item.path : activePath.includes(item.path);
 
   if (item.children) {
-    active = item.children.some((child) => child.path === activePath);
+    active = item.children.some((child) => activePath.includes(child.path));
   }
 
   return (
@@ -175,7 +175,7 @@ const renderNavItem = ({ item, activePath }: NavItemProps) => {
 };
 
 export const NavItem: FC<NavItemProps> = ({ item, activePath }) => {
-  const [open, setOpen] = useState(item.children?.some((c) => c.path == activePath));
+  const [open, setOpen] = useState(item.children?.some((c) => activePath.includes(c.path)));
 
   const handleClick = () => {
     setOpen(!open);
