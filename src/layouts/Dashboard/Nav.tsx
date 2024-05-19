@@ -175,7 +175,7 @@ const renderNavItem = ({ item, activePath }: NavItemProps) => {
 };
 
 export const NavItem: FC<NavItemProps> = ({ item, activePath }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(item.children?.some((c) => c.path == activePath));
 
   const handleClick = () => {
     setOpen(!open);
