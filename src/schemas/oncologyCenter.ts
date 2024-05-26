@@ -7,7 +7,10 @@ export const OncologyCenterSchema = z.object({
   id: z.string().uuid().optional(),
   name: z.string().min(1, { message: 'Nombre requerido' }),
   email: z.string().email({ message: 'Correo electrónico requerido' }),
-  phone: z.string().refine(validator.isMobilePhone, { message: 'Teléfono inválido' }),
+  phone: z
+    .string()
+    .startsWith('+', { message: 'Código de país requerido ej: +58' })
+    .refine(validator.isMobilePhone, { message: 'Teléfono inválido' }),
   isActive: z.boolean().optional(),
 });
 

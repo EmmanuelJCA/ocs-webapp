@@ -1,6 +1,6 @@
 import { api } from '@/redux/services/api';
-import type { OncologyCenter } from '@/types';
 import { OncologyCenterRequest } from '@/schemas/oncologyCenter';
+import type { OncologyCenter, OncologyCenterWithUsers } from '@/types';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +46,20 @@ const oncologyCentersApiSlice = api.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    getOncologyCentersUsers: builder.query<OncologyCenterWithUsers[], void>({
+      query: () => ({
+        url: `${ENDPOINT}/users`,
+        method: 'GET',
+      }),
+      providesTags: ['OncologyCenters'],
+    }),
+    getOncologyCenterUsers: builder.query<OncologyCenterWithUsers, string>({
+      query: (oncologyCenterId) => ({
+        url: `${ENDPOINT}/${oncologyCenterId}/users`,
+        method: 'GET',
+      }),
+      providesTags: ['OncologyCenters'],
+    }),
   }),
 });
 
@@ -55,4 +69,6 @@ export const {
   useGetOncologyCenterQuery,
   useUpdateOncologyCenterMutation,
   useDeleteOncologyCenterMutation,
+  useGetOncologyCentersUsersQuery,
+  useGetOncologyCenterUsersQuery,
 } = oncologyCentersApiSlice;

@@ -4,11 +4,12 @@ import { Tooltip, IconButton } from '@mui/material';
 import { Block, CheckCircleOutline } from '@mui/icons-material';
 
 import { formatDateTime } from '@/utils';
-import { OncologyCenter } from '@/types';
+import { UsersDialog } from './UsersCol';
 import { Iconify, DataTable } from '@/components';
+import { User, OncologyCenterWithUsers } from '@/types';
 import { OncologyCenterForm } from '../OncologyCenterForm/OncologyCenterForm';
 
-const EditOncologyCenterButton = (props) => {
+const EditOncologyCenterButton = (props: object) => {
   return (
     <Tooltip title="Editar" {...props}>
       <IconButton>
@@ -18,7 +19,7 @@ const EditOncologyCenterButton = (props) => {
   );
 };
 
-const columns: GridColDef<OncologyCenter>[] = [
+const columns: GridColDef<OncologyCenterWithUsers>[] = [
   {
     field: 'name',
     flex: 2,
@@ -43,14 +44,33 @@ const columns: GridColDef<OncologyCenter>[] = [
       return <a href={`tel: ${row.phone}`}>{row.phone}</a>;
     },
   },
+  // {
+  //   field: 'website',
+  //   flex: 1,
+  //   minWidth: 150,
+  //   headerName: 'Web',
+  //   renderCell: ({ row }) => {
+  //     return <a href={`tel: ${row.website}`}>{row.website}</a>;
+  //   },
+  // },
   {
-    field: 'website',
+    field: 'users',
     flex: 1,
     minWidth: 150,
-    headerName: 'Web',
-    renderCell: ({ row }) => {
-      return <a href={`tel: ${row.website}`}>{row.website}</a>;
+    headerName: 'Usuarios',
+    valueGetter: (value?: User[]) => {
+      if (!value) return '';
+      return value
+        .map(
+          (user) =>
+            `${user.firstName} ${user.lastName} ${user.identification} ${user.email} ${user.phone}`
+        )
+        .join(', ');
     },
+    renderCell: ({ row }) => {
+      return <UsersDialog users={row.users} />;
+    },
+    sortComparator: (v1, v2) => v1.length - v2.length,
   },
   {
     field: 'inactivatedAt',
@@ -80,7 +100,7 @@ const columns: GridColDef<OncologyCenter>[] = [
 ];
 
 interface Props {
-  oncologyCenters: OncologyCenter[];
+  oncologyCenters: OncologyCenterWithUsers[];
 }
 
 export const OncologyCentersTable: FC<Props> = ({ oncologyCenters }) => {

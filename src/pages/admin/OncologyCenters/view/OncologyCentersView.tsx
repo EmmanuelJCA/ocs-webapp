@@ -3,10 +3,10 @@ import { Box, Button, Container, Typography } from '@mui/material';
 
 import { Loader, Breadcrumb } from '@/components';
 import { OncologyCentersTable } from '../components';
-import { useGetOncologyCentersQuery } from '@/redux/features';
+import { useGetOncologyCentersUsersQuery } from '@/redux/features';
 import { OncologyCenterForm } from '../components/OncologyCenterForm/OncologyCenterForm';
 
-const CreateOncologyCenterButton = (props) => {
+const CreateOncologyCenterButton = (props: object) => {
   return (
     <Button startIcon={<AddOutlined />} sx={{ ml: 'auto', mb: 2 }} {...props}>
       Crear centro oncologico
@@ -15,7 +15,7 @@ const CreateOncologyCenterButton = (props) => {
 };
 
 export const OncologyCentersView = () => {
-  const { data = [], isLoading } = useGetOncologyCentersQuery();
+  const { data = [], isLoading } = useGetOncologyCentersUsersQuery();
 
   if (isLoading) return <Loader />;
 

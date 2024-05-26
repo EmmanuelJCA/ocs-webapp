@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import validator from 'validator';
+import { useSearchParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -20,11 +22,16 @@ import { useAddOncologyCenterMutation, useUpdateOncologyCenterMutation } from '@
 
 interface Props {
   oncologyCenter?: OncologyCenter;
-  triggerComponent: any;
+  triggerComponent: React.FC<{ onClick: () => void }>;
 }
 
 export const OncologyCenterForm = ({ oncologyCenter, triggerComponent }: Props) => {
-  const [open, setOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const oncologyCenterId = searchParams.get('oncologyCenterId');
+
+  const id = oncologyCenterId && validator.isUUID(oncologyCenterId) ? oncologyCenterId : '';
+
+  const [open, setOpen] = useState(id == oncologyCenter?.id);
 
   const {
     control,
@@ -44,10 +51,12 @@ export const OncologyCenterForm = ({ oncologyCenter, triggerComponent }: Props) 
   });
 
   const handleClickOpen = () => {
+    if (oncologyCenter?.id) setSearchParams({ oncologyCenterId: oncologyCenter?.id });
     setOpen(true);
   };
 
   const handleClose = () => {
+    setSearchParams();
     setOpen(false);
   };
 
@@ -64,7 +73,7 @@ export const OncologyCenterForm = ({ oncologyCenter, triggerComponent }: Props) 
       }
       handleClose();
     } catch (error) {
-      httpErrorHandler(error);
+      httpErrorHandler(error, {});
     }
   };
 
@@ -74,6 +83,7 @@ export const OncologyCenterForm = ({ oncologyCenter, triggerComponent }: Props) 
     <>
       <TriggerComponent onClick={handleClickOpen} />
       <Dialog
+        fullWidth
         open={open}
         onClose={handleClose}
         PaperProps={{
@@ -81,7 +91,7 @@ export const OncologyCenterForm = ({ oncologyCenter, triggerComponent }: Props) 
           onSubmit: handleSubmit(mutateOncologyCenter),
         }}
       >
-        <DialogTitle>Nuevo centro oncológico</DialogTitle>
+        <DialogTitle>{oncologyCenter?.id ? 'Editar' : 'Nuevo'} centro oncológico</DialogTitle>
         <DialogContent>
           <Stack padding={2} gap={2}>
             <TextField
