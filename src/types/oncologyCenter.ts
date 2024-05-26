@@ -1,3 +1,5 @@
+import { User } from './user';
+
 export interface OncologyCenter {
   id: string;
   createdAt: Date;
@@ -7,4 +9,8 @@ export interface OncologyCenter {
   phone: string;
   email: string;
   website: string | null;
+}
+
+export interface OncologyCenterWithUsers extends OncologyCenter {
+  users: User[];
 }

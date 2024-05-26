@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { blue } from '@mui/material/colors';
-import { Mail, Edit, Close, Phone, Language, LocalHospital } from '@mui/icons-material';
+import { Mail, Edit, Close, Phone, AccountCircle } from '@mui/icons-material';
 import {
+  Box,
   List,
   Link,
   Stack,
@@ -11,24 +12,25 @@ import {
   Tooltip,
   ListItem,
   IconButton,
+  Typography,
   DialogTitle,
   ListItemText,
   ListItemButton,
   ListItemAvatar,
 } from '@mui/material';
 
-import { OncologyCenter } from '@/types';
+import { User } from '@/types';
 import { Link as RouterLink } from '@/router/components';
 
 interface Props {
-  oncologyCenters: OncologyCenter[];
+  users: User[];
 }
 
-export const OncologyCentersDialog = ({ oncologyCenters }: Props) => {
+export const UsersDialog = ({ users }: Props) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
-    if (oncologyCenters.length > 0) setOpen(true);
+    if (users.length > 0) setOpen(true);
   };
 
   const handleClose = () => {
@@ -37,13 +39,11 @@ export const OncologyCentersDialog = ({ oncologyCenters }: Props) => {
 
   return (
     <>
-      <Tooltip title={oncologyCenters.map((oc) => oc.name).join(', ')}>
-        <Button startIcon={<LocalHospital />} onClick={handleClickOpen}>
-          {oncologyCenters.length}
-        </Button>
-      </Tooltip>
+      <Button startIcon={<AccountCircle />} onClick={handleClickOpen}>
+        {users.length}
+      </Button>
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle sx={{ m: 0, pr: 10 }}>Centros oncológicos</DialogTitle>
+        <DialogTitle sx={{ m: 0, pr: 10 }}>Usuarios</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -57,36 +57,31 @@ export const OncologyCentersDialog = ({ oncologyCenters }: Props) => {
           <Close />
         </IconButton>
         <List sx={{ pt: 0 }}>
-          {oncologyCenters.map((oncologyCenter) => (
-            <ListItem disableGutters key={oncologyCenter.id}>
+          {users.map((user) => (
+            <ListItem disableGutters key={user.id}>
               <ListItemButton>
                 <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                    <LocalHospital />
+                  <Avatar sx={{ bgcolor: blue[100], color: blue[600] }} src={user.avatar}>
+                    <AccountCircle />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={oncologyCenter.name} />
+                <Box width={1}>
+                  <ListItemText primary={`${user.firstName} ${user.lastName}`} />
+                  <Typography variant="caption">{user.identification}</Typography>
+                </Box>
                 <Stack flexDirection="row" gap={2}>
-                  {oncologyCenter.website && (
-                    <Tooltip title={oncologyCenter.website}>
-                      <Language />
-                    </Tooltip>
-                  )}
                   <Tooltip title="Editar">
-                    <Link
-                      component={RouterLink}
-                      href={`/admin/oncology-centers?oncologyCenterId=${oncologyCenter.id}`}
-                    >
+                    <Link component={RouterLink} href={`/admin/users/${user.id}/edit`}>
                       <Edit />
                     </Link>
                   </Tooltip>
-                  <Tooltip title={oncologyCenter.email}>
-                    <Link href={`mailto: ${oncologyCenter.email}`}>
+                  <Tooltip title={user.email}>
+                    <Link href={`mailto: ${user.email}`}>
                       <Mail />
                     </Link>
                   </Tooltip>
-                  <Tooltip title={oncologyCenter.phone}>
-                    <Link href={`tel: ${oncologyCenter.phone}`}>
+                  <Tooltip title={user.phone}>
+                    <Link href={`tel: ${user.phone}`}>
                       <Phone />
                     </Link>
                   </Tooltip>

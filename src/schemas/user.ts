@@ -14,22 +14,28 @@ export const UserSchema = z.object({
   lastName: z.string().min(1, { message: 'Apellido requerido' }),
   email: z.string().email({ message: 'Correo electrónico requerido' }),
   password: z.string().min(1, { message: 'Contraseña requerida' }),
-  identification: z.string().regex(IDENTIFICATION_REGEX, { message: 'Cédula inválida' }),
+  identification: z
+    .string()
+    .regex(IDENTIFICATION_REGEX, { message: 'Cédula inválida, ej: V-09123123' }),
   genre: z.nativeEnum(Genre),
   roles: z.array(z.nativeEnum(Role)).min(1, { message: 'Roles requeridos' }),
   dateOfBirth: z.date({ message: 'Fecha de nacimiento requerida' }),
-  phone: z.string().refine(validator.isMobilePhone, { message: 'Teléfono inválido' }),
+  phone: z
+    .string()
+    .startsWith('+', { message: 'Código de país requerido ej: +58' })
+    .refine(validator.isMobilePhone, { message: 'Teléfono inválido, ej: +584141231234' }),
   inactivatedAt: z.date().optional(),
   oncologyCentersIds: z
     .array(z.string().uuid())
     .min(1, { message: 'Centros oncológicos requeridos' }),
-  avatar: imageSchema.or(z.string()).optional(),
+  avatar: z.string().nullable().or(imageSchema.nullable()),
+  isActive: z.boolean().optional(),
 });
 
-export const updateUserSchema = UserSchema.and(
+export const UpdateUserSchema = UserSchema.omit({ password: true }).and(
   z.object({
     isActive: z.boolean(),
-    password: z.string().email({ message: 'Correo electrónico requerido' }),
+    password: z.string().optional(),
   })
 );
 
