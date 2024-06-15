@@ -15,7 +15,7 @@ export const icon = (name: string) => (
 
 export const navConfig: NavItem[] = [
   {
-    title: 'inicio',
+    title: 'Inicio',
     path: '/',
     icon: icon('ic_home'),
   },
@@ -32,6 +32,28 @@ export const navConfig: NavItem[] = [
         title: 'Centros oncológicos',
         path: '/admin/oncology-centers',
       },
+      {
+        title: 'Oncólogos',
+        path: '/admin/physicians',
+      },
+      {
+        title: 'Ayudantes oncológicos',
+        path: '/admin/physician-supports',
+      },
+      {
+        title: 'Insumos médicos',
+        path: '/admin/physician-supports',
+      },
     ],
+  },
+  {
+    title: 'Citas médicas',
+    path: '/appointments',
+    icon: icon('ic_medical_book'),
+  },
+  {
+    title: 'Tratamientos',
+    path: '/treatments',
+    icon: icon('ic_medical_suitcase'),
   },
 ];
