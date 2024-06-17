@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { GridColDef } from '@mui/x-data-grid';
 import { Tooltip, IconButton } from '@mui/material';
 import { Block, CheckCircleOutline } from '@mui/icons-material';
+import { GridColDef, GridFilterOperator } from '@mui/x-data-grid';
 
 import { Iconify, DataTable } from '@/components';
 import { formatDate, formatDateTime } from '@/utils';
@@ -81,7 +81,11 @@ const columns: GridColDef<Physician>[] = [
     flex: 1,
     minWidth: 150,
     headerName: 'Centros oncológicos',
-    filterOperators: oncologyCenterFilterOperators,
+    filterOperators: oncologyCenterFilterOperators as GridFilterOperator<
+      Physician,
+      OncologyCenter[],
+      OncologyCenter[]
+    >[],
     valueFormatter: (value?: OncologyCenter[]) => {
       if (!value) return '';
       return value.map((oc) => oc.name).join(', ');
@@ -111,7 +115,7 @@ const columns: GridColDef<Physician>[] = [
     flex: 1,
     minWidth: 150,
     headerName: 'Roles',
-    filterOperators: roleFilterOperators,
+    filterOperators: roleFilterOperators as GridFilterOperator<Physician, Role[], Role[]>[],
     valueFormatter: (value?: Role[]) => {
       if (!value) return '';
       return value.map((r) => RoleInSpanish[r]).toString();

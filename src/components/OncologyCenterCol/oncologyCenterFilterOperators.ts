@@ -1,9 +1,12 @@
 import { GridFilterOperator } from '@mui/x-data-grid';
 
-import { User, OncologyCenter } from '@/types';
+import { User, Physician, OncologyCenter } from '@/types';
 import { OncologyCenterFilterInput } from './OncologyCenterFilterInput';
 
-export const oncologyCenterFilterOperators: GridFilterOperator<User, OncologyCenter[]>[] = [
+export const oncologyCenterFilterOperators: GridFilterOperator<
+  User | Physician,
+  OncologyCenter[]
+>[] = [
   {
     label: 'alguno de',
     value: 'anyOf',

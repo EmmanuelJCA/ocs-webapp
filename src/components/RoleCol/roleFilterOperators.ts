@@ -1,9 +1,9 @@
 import { GridFilterOperator } from '@mui/x-data-grid';
 
-import { Role, User } from '@/types';
+import { Role, User, Physician } from '@/types';
 import { RoleFilterInput } from './RoleFilterInput';
 
-export const roleFilterOperators: GridFilterOperator<User, Role[]>[] = [
+export const roleFilterOperators: GridFilterOperator<User | Physician, Role[]>[] = [
   {
     label: 'alguno de',
     value: 'anyOf',
