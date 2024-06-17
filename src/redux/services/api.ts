@@ -41,6 +41,9 @@ const baseQueryWithErrorHandler: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data = result.error?.data as any;
+  let message = 'Ha ocurrido un error inesperado, por favor intente nuevamente';
 
   if (result.error) {
     switch (result.error.status) {
@@ -55,6 +58,10 @@ const baseQueryWithErrorHandler: BaseQueryFn<
         showSnackbar('Ha ocurrido un error inesperado, por favor intente nuevamente');
         break;
       default:
+        if (data && data.message) {
+          message = data.message;
+        }
+        showSnackbar(message);
         break;
     }
   }
