@@ -47,6 +47,15 @@ const routeMap: Route = {
         routeName: 'Editar Ayudante oncológico',
       },
     },
+    supplies: {
+      routeName: 'Administración de Insumos',
+      new: {
+        routeName: 'Registrar Insumo',
+      },
+      edit: {
+        routeName: 'Editar Insumos',
+      },
+    },
   },
   dashboard: {
     routeName: 'Dashboard',
