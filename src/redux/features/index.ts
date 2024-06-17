@@ -1,5 +1,6 @@
 export * from './auth';
 export * from './users';
+export * from './cancer';
 export * from './patients';
 export * from './supplies';
 export * from './physicians';

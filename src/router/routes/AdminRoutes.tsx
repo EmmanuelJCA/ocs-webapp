@@ -17,6 +17,7 @@ export const PhysicianSupportPage = lazy(
   () => import('@/pages/admin/PhysicianSupports/PhysicianSupport')
 );
 export const SuppliesPage = lazy(() => import('@/pages/admin/Supplies'));
+export const CancerPage = lazy(() => import('@/pages/admin/Cancer'));
 
 const AdminRoutes: RouteObject = {
   path: 'admin',
@@ -73,6 +74,10 @@ const AdminRoutes: RouteObject = {
     {
       path: 'supplies',
       element: <SuppliesPage />,
+    },
+    {
+      path: 'cancer',
+      element: <CancerPage />,
     },
   ],
 };

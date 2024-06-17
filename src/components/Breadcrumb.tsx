@@ -56,6 +56,15 @@ const routeMap: Route = {
         routeName: 'Editar Insumos',
       },
     },
+    cancer: {
+      routeName: 'Administración de Insumos',
+      new: {
+        routeName: 'Registrar Insumo',
+      },
+      edit: {
+        routeName: 'Editar Insumos',
+      },
+    },
   },
   dashboard: {
     routeName: 'Dashboard',

@@ -8,4 +8,5 @@ export * from './supplies';
 export * from './physician';
 export * from './treatment';
 export * from './department';
+export * from './cancerType';
 export * from './oncologyCenter';
