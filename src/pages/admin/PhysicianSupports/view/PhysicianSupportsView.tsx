@@ -20,7 +20,7 @@ export const PhysicianSupportsView = () => {
         <Breadcrumb />
       </Box>
       <Button
-        href="/admin/physicians-supports/new"
+        href="/admin/physician-supports/new"
         LinkComponent={Link}
         startIcon={<AddOutlined />}
         sx={{ ml: 'auto', mb: 2 }}
