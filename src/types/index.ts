@@ -3,6 +3,7 @@ export * from './http';
 export * from './role';
 export * from './user';
 export * from './person';
+export * from './patient';
 export * from './physician';
 export * from './department';
 export * from './oncologyCenter';

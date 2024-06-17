@@ -56,6 +56,15 @@ const routeMap: Route = {
       routeName: 'Perfil de Usuario',
     },
   },
+  patients: {
+    routeName: 'Pacientes',
+    new: {
+      routeName: 'Registrar Paciente',
+    },
+    edit: {
+      routeName: 'Actualizar Paciente',
+    },
+  },
 };
 
 const getRouteName = (paths: string[], routeMap: Route): string | null => {

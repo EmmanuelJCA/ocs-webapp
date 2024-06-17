@@ -47,6 +47,11 @@ export const navConfig: NavItem[] = [
     ],
   },
   {
+    title: 'Pacientes',
+    path: '/patients',
+    icon: icon('ic_patient'),
+  },
+  {
     title: 'Citas médicas',
     path: '/appointments',
     icon: icon('ic_medical_book'),

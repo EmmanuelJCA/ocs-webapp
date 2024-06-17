@@ -7,6 +7,7 @@ import { DashboardLayout } from '@/layouts/Dashboard';
 // ----------------------------------------------------------------------
 
 export const HomePage = lazy(() => import('@/pages/Home'));
+export const PatientsPage = lazy(() => import('@/pages/Patients'));
 
 const MainRoutes: RouteObject = {
   path: '/',
@@ -23,6 +24,10 @@ const MainRoutes: RouteObject = {
     {
       index: true,
       element: <HomePage />,
+    },
+    {
+      path: 'patients',
+      element: <PatientsPage />,
     },
   ],
 };
