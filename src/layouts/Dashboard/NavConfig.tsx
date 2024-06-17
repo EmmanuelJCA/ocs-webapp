@@ -42,7 +42,7 @@ export const navConfig: NavItem[] = [
       },
       {
         title: 'Insumos médicos',
-        path: '/admin/physician-supports',
+        path: '/admin/supplies',
       },
     ],
   },

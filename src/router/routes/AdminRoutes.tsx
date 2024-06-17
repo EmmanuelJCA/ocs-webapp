@@ -12,6 +12,10 @@ export const UserPage = lazy(() => import('@/pages/admin/Users/User'));
 export const OncologyCentersPage = lazy(() => import('@/pages/admin/OncologyCenters'));
 export const PhysiciansPage = lazy(() => import('@/pages/admin/Physicians'));
 export const PhysicianPage = lazy(() => import('@/pages/admin/Physicians/Physician'));
+export const PhysicianSupportsPage = lazy(() => import('@/pages/admin/PhysicianSupports'));
+export const PhysicianSupportPage = lazy(
+  () => import('@/pages/admin/PhysicianSupports/PhysicianSupport')
+);
 
 const AdminRoutes: RouteObject = {
   path: 'admin',
@@ -52,6 +56,18 @@ const AdminRoutes: RouteObject = {
     {
       path: 'physicians/:physicianId/edit',
       element: <PhysicianPage />,
+    },
+    {
+      path: 'physician-supports',
+      element: <PhysicianSupportsPage />,
+    },
+    {
+      path: 'physician-supports/new',
+      element: <PhysicianSupportPage />,
+    },
+    {
+      path: 'physician-supports/:physicianSupportId/edit',
+      element: <PhysicianSupportPage />,
     },
   ],
 };

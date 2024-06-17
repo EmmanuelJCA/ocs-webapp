@@ -38,6 +38,15 @@ const routeMap: Route = {
         routeName: 'Editar Oncólogo',
       },
     },
+    'physician-supports': {
+      routeName: 'Administración de Ayudantes oncológicos',
+      new: {
+        routeName: 'Crear Ayudante oncológico',
+      },
+      edit: {
+        routeName: 'Editar Ayudante oncológico',
+      },
+    },
   },
   dashboard: {
     routeName: 'Dashboard',
