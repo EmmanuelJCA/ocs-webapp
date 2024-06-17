@@ -28,7 +28,7 @@ export const UserSchema = z.object({
   oncologyCentersIds: z
     .array(z.string().uuid())
     .min(1, { message: 'Centros oncológicos requeridos' }),
-  avatar: z.string().nullable().or(imageSchema.nullable()),
+  avatar: z.string().nullable().optional().or(imageSchema.nullable()),
   isActive: z.boolean().optional(),
 });
 

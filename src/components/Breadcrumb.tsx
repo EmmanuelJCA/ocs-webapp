@@ -29,6 +29,15 @@ const routeMap: Route = {
         routeName: 'Editar Centros oncológicos',
       },
     },
+    physicians: {
+      routeName: 'Administración de Oncólogos',
+      new: {
+        routeName: 'Crear Oncólogo',
+      },
+      edit: {
+        routeName: 'Editar Oncólogo',
+      },
+    },
   },
   dashboard: {
     routeName: 'Dashboard',
