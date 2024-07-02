@@ -83,6 +83,11 @@ const routeMap: Route = {
       routeName: 'Actualizar Paciente',
     },
   },
+  appointments: {
+    management: {
+      routeName: 'Gestión de citas médicas',
+    },
+  },
 };
 
 const getRouteName = (paths: string[], routeMap: Route): string | null => {

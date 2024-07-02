@@ -57,8 +57,18 @@ export const navConfig: NavItem[] = [
   },
   {
     title: 'Citas médicas',
-    path: '/appointments',
+    path: '#',
     icon: icon('ic_medical_book'),
+    children: [
+      {
+        title: 'Gestión',
+        path: '/appointments/management',
+      },
+      {
+        title: 'Reportes',
+        path: '/appointments/reports',
+      },
+    ],
   },
   {
     title: 'Tratamientos',

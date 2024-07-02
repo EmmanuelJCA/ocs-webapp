@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
 import { api } from './services';
+import uiReducer from './features/ui/uiSlice';
 import authReducer from './features/auth/authSlice';
 
 // ----------------------------------------------------------------------
@@ -10,6 +11,7 @@ export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     auth: authReducer,
+    ui: uiReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
   devTools: true,

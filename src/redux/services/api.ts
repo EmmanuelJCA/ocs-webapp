@@ -72,6 +72,6 @@ const baseQueryWithErrorHandler: BaseQueryFn<
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithErrorHandler,
-  tagTypes: ['User', 'OncologyCenters', 'Supplies', 'CancerType'],
+  tagTypes: ['User', 'OncologyCenters', 'Supplies', 'CancerType', 'Appointments'],
   endpoints: () => ({}),
 });
