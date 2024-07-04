@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Vaccines, ExpandMore, LocalHospital } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
 import {
   Box,
   List,
@@ -27,11 +27,10 @@ import {
 import { Iconify } from '@/components';
 
 interface Props {
-  showCard?: boolean;
   triggerComponent: React.ComponentType<{ onClick: () => void }>;
 }
 
-export const SessionsModal = ({ showCard = false, triggerComponent }: Props) => {
+export const SessionsModal = ({ triggerComponent }: Props) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
