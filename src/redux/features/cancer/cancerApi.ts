@@ -1,5 +1,5 @@
-import type { CancerType } from '@/types';
 import { api } from '@/redux/services/api';
+import type { CancerType, CancerStage } from '@/types';
 import { CancerTypeRequest } from '@/schemas/cancerType';
 
 // ----------------------------------------------------------------------
@@ -39,6 +39,18 @@ const cancerApiSlice = api.injectEndpoints({
         body: cancerType,
       }),
       invalidatesTags: ['CancerType'],
+    }),
+    getCancerStages: builder.query<CancerStage[], void>({
+      query: () => ({
+        url: `${ENDPOINT}/stages`,
+        method: 'GET',
+      }),
+    }),
+    getCancerStage: builder.query<CancerStage, string>({
+      query: (cancerStageId) => ({
+        url: `${ENDPOINT}/stages/${cancerStageId}`,
+        method: 'GET',
+      }),
     }),
   }),
 });

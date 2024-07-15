@@ -32,7 +32,7 @@ const appointmentsApiSlice = api.injectEndpoints({
       }),
       providesTags: ['Appointments'],
     }),
-    updateAppointment: builder.mutation<Appointment, AppointmentRequest>({
+    updateAppointment: builder.mutation<Appointment, Partial<AppointmentRequest>>({
       query: (appointment) => ({
         url: `${ENDPOINT}/${appointment.id}`,
         method: 'PUT',

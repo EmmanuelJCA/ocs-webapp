@@ -8,4 +8,5 @@ export * from './treatmentTypes';
 export * from './treatmentTypes';
 export * from './oncologyCenters';
 export * from './physicianSupports';
+export * from './appointmentReasons';
 export * from './physicianSpecializations';

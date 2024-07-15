@@ -1,5 +1,8 @@
 import { Patient } from './patient';
 import { Physician } from './physician';
+import { CancerType } from './cancerType';
+import { CancerStage } from './cancerStage';
+import { OncologyCenter } from './oncologyCenter';
 
 export interface Appointment {
   id: string;
@@ -7,7 +10,8 @@ export interface Appointment {
   updatedAt: Date;
   notes: string;
   startDateTime: Date;
-  endDateTime: Date;
+  endDateTime: Date | null;
+  oncologyCenter: OncologyCenter;
   reasons: Reason[];
   physician: Physician;
   patient: Patient;
@@ -22,15 +26,13 @@ export interface Diagnostic {
   closedAt: Date;
   date: Date;
   notes: string;
-  cancerType: Reason;
-  cancerStage: Reason;
+  cancerType: CancerType;
+  cancerStage: CancerStage;
 }
 
 export interface Reason {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  level?: number;
-  name?: string;
-  description?: string;
+  description: string;
 }

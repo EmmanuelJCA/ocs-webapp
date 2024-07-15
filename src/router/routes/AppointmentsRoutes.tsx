@@ -8,6 +8,7 @@ import { DashboardLayout } from '@/layouts/Dashboard';
 // ----------------------------------------------------------------------
 
 export const AppointmentManagementPage = lazy(() => import('@/pages/appointments/Management'));
+export const AppointmentDetailsPage = lazy(() => import('@/pages/appointments/Management/Details'));
 
 const AppointmentsRoutes: RouteObject = {
   path: 'appointments',
@@ -31,6 +32,10 @@ const AppointmentsRoutes: RouteObject = {
     {
       path: 'management',
       element: <AppointmentManagementPage />,
+    },
+    {
+      path: 'management/:appointmentId/details',
+      element: <AppointmentDetailsPage />,
     },
   ],
 };

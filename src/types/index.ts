@@ -10,4 +10,5 @@ export * from './treatment';
 export * from './department';
 export * from './cancerType';
 export * from './appointment';
+export * from './cancerStage';
 export * from './oncologyCenter';

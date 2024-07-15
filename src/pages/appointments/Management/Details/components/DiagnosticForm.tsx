@@ -23,7 +23,7 @@ import {
 import { Iconify } from '@/components';
 import { httpErrorHandler } from '@/utils';
 import { AppointmentSchema, AppointmentRequest } from '@/schemas/appointment';
-import { Reason, Patient, Physician, Appointment, OncologyCenter } from '@/types';
+import { Reason, Patient, Physician, Diagnostic, OncologyCenter } from '@/types';
 import {
   useAddAppointmentMutation,
   useUpdateAppointmentMutation,
@@ -34,19 +34,20 @@ import {
   useGetPhysiciansQuery,
   useGetOncologyCentersQuery,
 } from '@/redux/features';
+import { DiagnosticRequest, DiagnosticSchema } from '@/schemas/diagnostic';
 
 interface Props {
-  appointment?: Appointment;
+  diagnostic?: Diagnostic;
   triggerComponent: React.ComponentType<{ onClick: () => void }>;
 }
 
-export const AppointmentForm = ({ appointment, triggerComponent }: Props) => {
+export const DiagnosticForm = ({ diagnostic, triggerComponent }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const appointmentId = searchParams.get('appointmentId');
+  const diagnosticId = searchParams.get('appointmentId');
 
-  const id = appointmentId && validator.isUUID(appointmentId) ? appointmentId : '';
+  const id = diagnosticId && validator.isUUID(diagnosticId) ? diagnosticId : '';
 
-  const [open, setOpen] = useState(id == appointment?.id);
+  const [open, setOpen] = useState(id == diagnostic?.id);
 
   const { data: oncologyCenters = [] } = useGetOncologyCentersQuery();
   const { data: physicians = [] } = useGetPhysiciansQuery();
@@ -59,26 +60,20 @@ export const AppointmentForm = ({ appointment, triggerComponent }: Props) => {
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm<AppointmentRequest>({
+  } = useForm<DiagnosticRequest>({
     defaultValues: {
-      id: appointment?.id,
-      notes: appointment ? appointment.notes : '',
-      startDateTime: appointment ? new Date(appointment.startDateTime) : ('' as unknown as Date),
-      endDateTime: appointment
-        ? appointment.endDateTime != null
-          ? new Date(appointment.endDateTime)
-          : null
-        : null,
-      reasonsIds: appointment ? appointment.reasons.map((r) => r.id) : [],
-      physicianId: appointment ? appointment.physician.id : '',
-      patientId: appointment ? appointment.patient.id : '',
-      oncologyCenterId: appointment ? appointment.oncologyCenter.id : '',
+      id: diagnostic?.id,
+      notes: diagnostic ? diagnostic.notes : '',
+      date: diagnostic ? new Date(diagnostic.date) : ('' as unknown as Date),
+      appointmentId: diagnostic ? 'diagnostic.appointment.id' : '',
+      cancerTypeId: diagnostic ? diagnostic.cancerType.id : '',
+      cancerStageId: diagnostic ? diagnostic.cancerStage.id : '',
     },
-    resolver: zodResolver(AppointmentSchema),
+    resolver: zodResolver(DiagnosticSchema),
   });
 
   const handleClickOpen = () => {
-    if (appointment?.id) setSearchParams({ appointmentId: appointment?.id });
+    if (diagnostic?.id) setSearchParams({ diagnosticId: diagnostic?.id });
     setOpen(true);
   };
 
@@ -92,7 +87,7 @@ export const AppointmentForm = ({ appointment, triggerComponent }: Props) => {
 
   const mutateAppointment = async (data: AppointmentRequest) => {
     try {
-      if (appointment) {
+      if (diagnostic) {
         await updateAppointment(data);
       } else {
         await addAppointment(data).unwrap();
@@ -118,7 +113,7 @@ export const AppointmentForm = ({ appointment, triggerComponent }: Props) => {
           onSubmit: handleSubmit(mutateAppointment),
         }}
       >
-        <DialogTitle>{appointment?.id ? 'Editar' : 'Nueva'} cita médica</DialogTitle>
+        <DialogTitle>{diagnostic?.id ? 'Editar' : 'Nueva'} cita médica</DialogTitle>
         <DialogContent>
           <Stack padding={2} gap={2}>
             <Controller
@@ -290,7 +285,7 @@ export const AppointmentForm = ({ appointment, triggerComponent }: Props) => {
         <DialogActions>
           <Stack width={1} px={1} flexDirection="row" justifyContent="space-between">
             <Button
-              disabled={!appointment?.id}
+              disabled={!diagnostic?.id}
               endIcon={<Iconify icon="solar:round-arrow-right-bold" />}
             >
               Ir a detalles

@@ -41,8 +41,6 @@ const AddAppointmentButton = (props: object) => {
 export const AppointmentManagementView = () => {
   const { data = [] } = useGetAppointmentsQuery();
 
-  console.log(data);
-
   return (
     <Container maxWidth="xl" sx={{ height: 1, display: 'flex', flexDirection: 'column' }}>
       <Box mb={{ xs: 2, md: 0 }}>
@@ -100,21 +98,21 @@ export const AppointmentManagementView = () => {
           <Grid item xs={12} sm={4}>
             <Card sx={{ height: 'calc(100vh - 250px )' }}>
               <CardHeader title="Pendientes" />
-              <AppointmentList showCard />
+              <AppointmentList status="pending" appointments={data} />
             </Card>
           </Grid>
 
           <Grid item xs={12} sm={4}>
             <Card sx={{ height: 'calc(100vh - 250px )' }}>
               <CardHeader title="En Progreso" />
-              <AppointmentList />
+              <AppointmentList status="inProgress" appointments={data} />
             </Card>
           </Grid>
 
           <Grid item xs={12} sm={4}>
             <Card sx={{ height: 'calc(100vh - 250px )' }}>
               <CardHeader title="Completadas" />
-              <AppointmentList />
+              <AppointmentList status="completed" appointments={data} />
             </Card>
           </Grid>
         </Grid>

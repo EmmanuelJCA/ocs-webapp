@@ -1,3 +1,4 @@
+import { FC, DragEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { ExpandMore, LocalHospital } from '@mui/icons-material';
 import {
@@ -17,15 +18,23 @@ import {
   AccordionDetails,
 } from '@mui/material';
 
+import { Appointment } from '@/types';
 import { Iconify } from '@/components';
+import { formatDateTime } from '@/utils';
 import { AppointmentForm } from './AppointmentForm';
+import { Link as RouterLink } from '@/router/components';
 import { endDragging, startDragging } from '@/redux/features/ui';
 
-export const AppointmentCard = () => {
+interface Props {
+  appointment: Appointment;
+}
+
+export const AppointmentCard: FC<Props> = ({ appointment }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const onDragStart = () => {
+  const onDragStart = (event: DragEvent) => {
+    event.dataTransfer.setData('text', appointment.id);
     dispatch(startDragging());
   };
 
@@ -38,13 +47,13 @@ export const AppointmentCard = () => {
       draggable
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
-      sx={{ marginBottom: 1, backgroundColor: theme.palette.grey[200] }}
+      sx={{ width: 1, marginBottom: 1, backgroundColor: theme.palette.grey[200] }}
     >
       <CardContent>
         <Chip
           sx={{ position: 'absolute', top: 10, right: 10 }}
           icon={<LocalHospital />}
-          label={'San Lucas'}
+          label={appointment.oncologyCenter.name}
           color="primary"
           variant="outlined"
         />
@@ -61,17 +70,17 @@ export const AppointmentCard = () => {
               }}
             >
               <Avatar
-                src={
-                  'https://s3.us-east-1.amazonaws.com/ocsbucket/images/797e0d00-02a8-11ef-a995-ebafd2e80171.jpeg'
-                }
-                alt={`Emmanuel Cañate`}
+                src={appointment.physician.avatar}
+                alt={`${appointment.physician.firstName} ${appointment.physician.lastName}`}
               />
 
               <Box sx={{ ml: 2 }}>
-                <Typography variant="subtitle2">Emmanuel Cañate</Typography>
+                <Typography variant="subtitle2">
+                  {appointment.physician.firstName} {appointment.physician.lastName}
+                </Typography>
 
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  V-30749551
+                  {appointment.physician.identification}
                 </Typography>
               </Box>
               <Iconify icon="maki:doctor" width={30} sx={{ position: 'absolute', right: 30 }} />
@@ -89,10 +98,12 @@ export const AppointmentCard = () => {
               <Avatar src={'/assets/illustrations/patient.png'} alt={`John Doe`} />
 
               <Box sx={{ ml: 2 }}>
-                <Typography variant="subtitle2">John Doe</Typography>
+                <Typography variant="subtitle2">
+                  {appointment.patient.firstName} {appointment.patient.lastName}
+                </Typography>
 
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  V-12233124
+                  {appointment.patient.identification}
                 </Typography>
               </Box>
               <Iconify
@@ -104,8 +115,12 @@ export const AppointmentCard = () => {
             <Box>
               <Typography>Razones de la cita:</Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                - Dolor de cabeza
-                <br />- Convulsiones
+                {appointment.reasons.map((reason) => (
+                  <>
+                    - {reason.description}
+                    <br />
+                  </>
+                ))}
               </Typography>
             </Box>
             <Accordion>
@@ -117,7 +132,7 @@ export const AppointmentCard = () => {
                 Notas
               </AccordionSummary>
               <AccordionDetails>
-                - El paciente debe someterse a una resonancia magnética
+                {appointment.notes ? appointment.notes : 'No hay notas.'}
               </AccordionDetails>
             </Accordion>
           </Box>
@@ -127,19 +142,28 @@ export const AppointmentCard = () => {
       <CardActions sx={{ display: 'flex', justifyContent: 'start' }}>
         <Stack width={1} flexDirection="row" justifyContent="space-between">
           <Box>
-            <Typography variant="body2">Inicio: Mañana a las 8:00 p.m.</Typography>
-            {/* <Typography variant="body2">Finalizó: Hoy a las 8:30 p.m.</Typography> */}
+            <Typography variant="body2">
+              Inicio: {formatDateTime(appointment.startDateTime)}
+            </Typography>
+            {appointment.endDateTime && (
+              <Typography variant="body2">
+                Finalizó: {formatDateTime(appointment.startDateTime)}
+              </Typography>
+            )}
           </Box>
           <Box>
             <AppointmentForm
-              // appointment={}
+              appointment={appointment}
               triggerComponent={(props: object) => (
                 <IconButton {...props}>
                   <Iconify icon="solar:pen-bold" />
                 </IconButton>
               )}
             />
-            <IconButton>
+            <IconButton
+              component={RouterLink}
+              href={`/appointments/management/${appointment.id}/details`}
+            >
               <Iconify icon="solar:round-arrow-right-bold" />
             </IconButton>
           </Box>

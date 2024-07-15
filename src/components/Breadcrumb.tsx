@@ -86,6 +86,9 @@ const routeMap: Route = {
   appointments: {
     management: {
       routeName: 'Gestión de citas médicas',
+      details: {
+        routeName: 'Detalles de la cita',
+      },
     },
   },
 };
