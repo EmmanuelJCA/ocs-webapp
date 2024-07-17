@@ -1,6 +1,6 @@
 import type { Appointment } from '@/types';
 import { api } from '@/redux/services/api';
-import { AppointmentRequest } from '@/schemas/appointment';
+import { AppointmentRequest, PartialAppointmentRequest } from '@/schemas/appointment';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ const appointmentsApiSlice = api.injectEndpoints({
       }),
       providesTags: ['Appointments'],
     }),
-    updateAppointment: builder.mutation<Appointment, Partial<AppointmentRequest>>({
+    updateAppointment: builder.mutation<Appointment, PartialAppointmentRequest>({
       query: (appointment) => ({
         url: `${ENDPOINT}/${appointment.id}`,
         method: 'PUT',

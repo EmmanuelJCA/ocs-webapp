@@ -60,4 +60,6 @@ export const {
   useGetCancerTypeQuery,
   useGetCancerTypesQuery,
   useUpdateCancerTypeMutation,
+  useGetCancerStagesQuery,
+  useGetCancerStageQuery,
 } = cancerApiSlice;
