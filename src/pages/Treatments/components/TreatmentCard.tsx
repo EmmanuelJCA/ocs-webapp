@@ -1,3 +1,4 @@
+import { FC, DragEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { Vaccines, ExpandMore, LocalHospital } from '@mui/icons-material';
 import {
@@ -17,16 +18,23 @@ import {
   AccordionDetails,
 } from '@mui/material';
 
+import { Treatment } from '@/types';
 import { Iconify } from '@/components';
+import { formatDateTime } from '@/utils';
 import { SessionsModal } from './SessionsModal';
 import { TreatmentForm } from './TreatmentsForm';
 import { endDragging, startDragging } from '@/redux/features/ui';
 
-export const TreatmentCard = () => {
+interface Props {
+  treatment: Treatment;
+}
+
+export const TreatmentCard: FC<Props> = ({ treatment }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const onDragStart = () => {
+  const onDragStart = (event: DragEvent) => {
+    event.dataTransfer.setData('text', treatment.id);
     dispatch(startDragging());
   };
 
@@ -45,14 +53,14 @@ export const TreatmentCard = () => {
         <Chip
           sx={{ position: 'absolute', top: 10, left: 10 }}
           icon={<Vaccines />}
-          label={'Radioterapia'}
+          label={treatment.type.name}
           color="warning"
           variant="outlined"
         />
         <Chip
           sx={{ position: 'absolute', top: 10, right: 10 }}
           icon={<LocalHospital />}
-          label={'San Lucas'}
+          label={treatment.oncologyCenter.name}
           color="primary"
           variant="outlined"
         />
@@ -69,17 +77,17 @@ export const TreatmentCard = () => {
               }}
             >
               <Avatar
-                src={
-                  'https://s3.us-east-1.amazonaws.com/ocsbucket/images/797e0d00-02a8-11ef-a995-ebafd2e80171.jpeg'
-                }
-                alt={`Emmanuel Cañate`}
+                src={treatment.physician.avatar}
+                alt={`${treatment.physician.firstName} ${treatment.physician.lastName}`}
               />
 
               <Box sx={{ ml: 2 }}>
-                <Typography variant="subtitle2">Emmanuel Cañate</Typography>
+                <Typography variant="subtitle2">
+                  {treatment.physician.firstName} {treatment.physician.lastName}
+                </Typography>
 
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  V-30749551
+                  {treatment.physician.identification}
                 </Typography>
               </Box>
               <Iconify icon="maki:doctor" width={30} sx={{ position: 'absolute', right: 30 }} />
@@ -94,25 +102,23 @@ export const TreatmentCard = () => {
                 bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
               }}
             >
-              <Avatar src={'/assets/illustrations/patient.png'} alt={`John Doe`} />
+              <Avatar
+                src={'/assets/illustrations/patient.png'}
+                alt={`${treatment.patient.firstName} ${treatment.patient.lastName}`}
+              />
 
               <Box sx={{ ml: 2 }}>
-                <Typography variant="subtitle2">John Doe</Typography>
+                <Typography variant="subtitle2">
+                  {treatment.patient.firstName} {treatment.patient.lastName}
+                </Typography>
 
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  V-12233124
+                  {treatment.patient.identification}
                 </Typography>
               </Box>
-              <Chip
-                sx={{ position: 'absolute', right: 30 }}
-                icon={<Iconify icon="material-symbols-light:inpatient-outline" width={30} />}
-                label={'Garganta'}
-                color="error"
-                variant="outlined"
-              />
             </Box>
             <Box>
-              <Typography>Sesiones programadas: 5</Typography>
+              <Typography>Sesiones programadas: {treatment.sessions}</Typography>
             </Box>
             <Accordion>
               <AccordionSummary
@@ -123,33 +129,7 @@ export const TreatmentCard = () => {
                 Instrucciones
               </AccordionSummary>
               <AccordionDetails sx={{ maxHeight: 180, overflowY: 'auto' }}>
-                1. Dosis y fraccionamiento:
-                <br /> - Dosificación total: 70 Gy
-                <br /> - Fraccionamiento: 35 fracciones
-                <br /> - Dosis por fracción: 2 Gy
-                <br /> 2. Técnica de tratamiento:
-                <br /> - Tipo de radioterapia: Radioterapia externa
-                <br /> - Energía de los haces: 6 MV
-                <br /> - Campos de tratamiento: Campo lateral derecho
-                <br /> - Posicionamiento del paciente: Decúbito supino con cabeza inmovilizada
-                <br /> 3. Órganos en riesgo:
-                <br /> - Órganos críticos a preservar: Médula espinal, glándulas salivales
-                <br /> - Restricciones de dosis: Dosis máxima permitida en médula espinal: 45 Gy; en
-                glándulas salivales: 30 Gy
-                <br /> 4. Control y seguimiento:
-                <br /> - Programa de control de calidad: Control semanal de la precisión del
-                posicionamiento
-                <br /> - Seguimiento del paciente: Evaluación clínica semanal y consulta médica al
-                final del tratamiento
-                <br /> 5. Instrucciones adicionales:
-                <br /> - Precauciones generales: Evitar alimentos muy calientes o picantes durante
-                el tratamiento
-                <br /> - Efectos secundarios esperados: Mucositis, disfagia; mantener una buena
-                hidratación y seguir una dieta blanda
-                <br /> Por favor, seguir estas instrucciones detalladamente para garantizar la
-                correcta administración del tratamiento de radioterapia en el cáncer de garganta. En
-                caso de dudas o complicaciones, contactar al oncólogo radioterapeuta responsable del
-                caso.
+                {treatment.instructions}
               </AccordionDetails>
             </Accordion>
           </Box>
@@ -159,12 +139,18 @@ export const TreatmentCard = () => {
       <CardActions sx={{ display: 'flex', justifyContent: 'start' }}>
         <Stack width={1} flexDirection="row" justifyContent="space-between">
           <Box>
-            <Typography variant="body2">Inicio: 18 de Julio a las 9:00 a.m.</Typography>
-            {/* <Typography variant="body2">Finalizó: Hoy a las 8:30 p.m.</Typography> */}
+            <Typography variant="body2">
+              Inicio: {formatDateTime(treatment.startDateTime)}
+            </Typography>
+            {treatment.endDateTime && (
+              <Typography variant="body2">
+                Finalizó: {formatDateTime(treatment.startDateTime)}
+              </Typography>
+            )}
           </Box>
           <Box>
             <TreatmentForm
-              // appointment={}
+              treatment={treatment}
               triggerComponent={(props: object) => (
                 <IconButton {...props}>
                   <Iconify icon="solar:pen-bold" />
@@ -172,6 +158,7 @@ export const TreatmentCard = () => {
               )}
             />
             <SessionsModal
+              treatment={treatment}
               triggerComponent={(props: object) => (
                 <IconButton {...props}>
                   <Iconify icon="solar:eye-bold" />

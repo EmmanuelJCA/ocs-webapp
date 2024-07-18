@@ -1,5 +1,6 @@
-import { DragEvent, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { useMemo, DragEvent } from 'react';
+import { enqueueSnackbar } from 'notistack';
 import { Box, List, Paper } from '@mui/material';
 
 import { Appointment } from '@/types';
@@ -7,7 +8,6 @@ import { useAppSelector } from '@/redux/store';
 import { endDragging } from '@/redux/features/ui';
 import { AppointmentCard } from './AppointmentCard';
 import { useUpdateAppointmentMutation } from '@/redux/features/appointments';
-import { enqueueSnackbar } from 'notistack';
 
 interface Props {
   appointments: Appointment[];
