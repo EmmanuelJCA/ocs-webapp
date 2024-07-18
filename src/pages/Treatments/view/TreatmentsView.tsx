@@ -1,10 +1,8 @@
-import { Add } from '@mui/icons-material';
-import { Box, Fab, Card, Grid, Container, CardHeader, Typography } from '@mui/material';
+import { Box, Card, Grid, Container, CardHeader, Typography } from '@mui/material';
 
 import { Breadcrumb } from '@/components';
 import { TreatmentList } from '../components';
 import { useGetTreatmentsQuery } from '@/redux/features';
-import { TreatmentForm } from '../components/TreatmentsForm';
 
 export const TreatmentsView = () => {
   const { data = [] } = useGetTreatmentsQuery(undefined);

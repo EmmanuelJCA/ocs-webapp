@@ -19,8 +19,11 @@ import {
 
 import { formatDateTime } from '@/utils';
 import { DiagnosticForm } from '../components';
+import { Treatment, Diagnostic } from '@/types';
 import { AppointmentCard } from '../../components';
+import { SessionsView } from '../components/SessionsView';
 import { Loader, Iconify, Breadcrumb } from '@/components';
+import { TreatmentsTable } from '../components/TreatmentsTable';
 import { useGetDiagnosticsQuery } from '@/redux/features/diagnostics';
 import {
   useGetAppointmentQuery,
@@ -54,7 +57,9 @@ export const AppointmentDetailsView: FC<Props> = ({ appointmentId }) => {
 
   const [updateAppointment] = useUpdateAppointmentMutation();
 
-  const [selectedDiagnostic, setSelectedDiagnostic] = useState<string | undefined>();
+  const [selectedDiagnostic, setSelectedDiagnostic] = useState<Diagnostic>();
+
+  const [selectedTreatment, setselectedTreatment] = useState<Treatment>();
 
   const handleFollowDiagnostic = async (diagnosticId: string) => {
     if (!appointment) return;
@@ -90,7 +95,7 @@ export const AppointmentDetailsView: FC<Props> = ({ appointmentId }) => {
           Cita médica
         </Typography>
         <Breadcrumb />
-        <Stack flexDirection={{ xs: 'column', md: 'row' }} width={1} gap={3} pt={2}>
+        <Stack flexDirection={{ xs: 'column', md: 'row' }} width={1} gap={3} my={2}>
           <AppointmentCard appointment={appointment!} />
           <Card sx={{ width: 1 }}>
             <CardHeader title={'Diagnósticos'} />
@@ -110,10 +115,10 @@ export const AppointmentDetailsView: FC<Props> = ({ appointmentId }) => {
                   <Stack flexDirection="row" justifyContent="space-between">
                     <Stack flexDirection="row">
                       <Checkbox
-                        checked={diagnostic.id === selectedDiagnostic}
+                        checked={diagnostic.id === selectedDiagnostic?.id}
                         onChange={(event) => {
                           event.target.checked
-                            ? setSelectedDiagnostic(diagnostic.id)
+                            ? setSelectedDiagnostic(diagnostic)
                             : setSelectedDiagnostic(undefined);
                         }}
                       />
@@ -176,10 +181,10 @@ export const AppointmentDetailsView: FC<Props> = ({ appointmentId }) => {
                   <Stack flexDirection="row" justifyContent="space-between">
                     <Stack flexDirection="row">
                       <Checkbox
-                        checked={diagnostic.id === selectedDiagnostic}
+                        checked={diagnostic.id === selectedDiagnostic?.id}
                         onChange={(event) => {
                           event.target.checked
-                            ? setSelectedDiagnostic(diagnostic.id)
+                            ? setSelectedDiagnostic(diagnostic)
                             : setSelectedDiagnostic(undefined);
                         }}
                       />
@@ -247,10 +252,10 @@ export const AppointmentDetailsView: FC<Props> = ({ appointmentId }) => {
                   <Stack flexDirection="row" justifyContent="space-between">
                     <Stack flexDirection="row">
                       <Checkbox
-                        checked={diagnostic.id === selectedDiagnostic}
+                        checked={diagnostic.id === selectedDiagnostic?.id}
                         onChange={(event) => {
                           event.target.checked
-                            ? setSelectedDiagnostic(diagnostic.id)
+                            ? setSelectedDiagnostic(diagnostic)
                             : setSelectedDiagnostic(undefined);
                         }}
                       />
@@ -320,6 +325,15 @@ export const AppointmentDetailsView: FC<Props> = ({ appointmentId }) => {
             </CardActions>
           </Card>
         </Stack>
+        {selectedDiagnostic && (
+          <TreatmentsTable
+            diagnostic={selectedDiagnostic}
+            selectedTreatment={selectedTreatment}
+            setSelectedTreatment={setselectedTreatment}
+          />
+        )}
+
+        {selectedTreatment && <SessionsView treatment={selectedTreatment} />}
       </Box>
     </Container>
   );

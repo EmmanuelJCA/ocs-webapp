@@ -19,9 +19,8 @@ import {
 } from '@mui/material';
 
 import { httpErrorHandler } from '@/utils';
-import { TreatmentRequest } from '@/schemas/treatment';
-import { AppointmentSchema } from '@/schemas/appointment';
-import { Physician, Treatment, TreatmentType, OncologyCenter } from '@/types';
+import { TreatmentSchema, TreatmentRequest } from '@/schemas/treatment';
+import { Physician, Treatment, Diagnostic, TreatmentType, OncologyCenter } from '@/types';
 import {
   useGetPhysiciansQuery,
   useAddTreatmentMutation,
@@ -31,11 +30,12 @@ import {
 } from '@/redux/features';
 
 interface Props {
+  diagnostic: Diagnostic;
   treatment?: Treatment;
   triggerComponent: React.ComponentType<{ onClick: () => void }>;
 }
 
-export const TreatmentForm = ({ treatment, triggerComponent }: Props) => {
+export const TreatmentForm = ({ diagnostic, treatment, triggerComponent }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const treatmentId = searchParams.get('treatmentId');
 
@@ -53,20 +53,30 @@ export const TreatmentForm = ({ treatment, triggerComponent }: Props) => {
     formState: { errors },
     handleSubmit,
     reset,
+    watch,
   } = useForm<TreatmentRequest>({
     defaultValues: {
       id: treatment?.id,
       instructions: treatment ? treatment.instructions : '',
       startDateTime: treatment ? new Date(treatment.startDateTime) : ('' as unknown as Date),
-      endDateTime: treatment ? new Date(treatment.startDateTime) : null,
+      endDateTime: treatment
+        ? treatment.endDateTime != null
+          ? new Date(treatment.endDateTime)
+          : null
+        : null,
       result: treatment ? treatment.result : null,
       resultNotes: treatment ? treatment.resultNotes : '',
       treatmentTypeId: treatment ? treatment.type.id : '',
       physicianId: treatment ? treatment.physician.id : '',
       oncologyCenterId: treatment ? treatment.oncologyCenter.id : '',
+      diagnosticId: diagnostic.id,
     },
-    resolver: zodResolver(AppointmentSchema),
+    resolver: zodResolver(TreatmentSchema),
   });
+
+  const watchEndTime = watch('endDateTime');
+
+  console.log(errors);
 
   const handleClickOpen = () => {
     if (treatment?.id) setSearchParams({ treatmentId: treatment?.id });
@@ -241,12 +251,14 @@ export const TreatmentForm = ({ treatment, triggerComponent }: Props) => {
               error={!!errors.instructions}
               helperText={errors.instructions?.message}
             />
-            <TextField
-              label="Notas del resultado"
-              {...register('resultNotes')}
-              error={!!errors.resultNotes}
-              helperText={errors.resultNotes?.message}
-            />
+            {watchEndTime !== null && (
+              <TextField
+                label="Notas del resultado"
+                {...register('resultNotes')}
+                error={!!errors.resultNotes}
+                helperText={errors.resultNotes?.message}
+              />
+            )}
           </Stack>
         </DialogContent>
         <DialogActions>

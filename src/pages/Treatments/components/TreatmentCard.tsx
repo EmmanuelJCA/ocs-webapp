@@ -22,7 +22,6 @@ import { Treatment } from '@/types';
 import { Iconify } from '@/components';
 import { formatDateTime } from '@/utils';
 import { SessionsModal } from './SessionsModal';
-import { TreatmentForm } from './TreatmentsForm';
 import { endDragging, startDragging } from '@/redux/features/ui';
 
 interface Props {
@@ -149,14 +148,6 @@ export const TreatmentCard: FC<Props> = ({ treatment }) => {
             )}
           </Box>
           <Box>
-            <TreatmentForm
-              treatment={treatment}
-              triggerComponent={(props: object) => (
-                <IconButton {...props}>
-                  <Iconify icon="solar:pen-bold" />
-                </IconButton>
-              )}
-            />
             <SessionsModal
               treatment={treatment}
               triggerComponent={(props: object) => (

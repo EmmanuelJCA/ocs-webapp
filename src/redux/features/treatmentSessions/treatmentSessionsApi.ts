@@ -1,7 +1,6 @@
 import { api } from '@/redux/services/api';
 import { TreatmentSessions } from '@/types';
-import { TreatmentRequest } from '@/schemas/treatment';
-import { PartialSessionsRequest } from '@/schemas/sessions';
+import { SessionsRequest, PartialSessionsRequest } from '@/schemas/sessions';
 
 // ----------------------------------------------------------------------
 
@@ -9,7 +8,7 @@ const ENDPOINT = '/treatment-sessions';
 
 const TreatmentSessionsApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
-    addSession: builder.mutation<TreatmentSessions, TreatmentRequest>({
+    addSession: builder.mutation<TreatmentSessions, SessionsRequest>({
       query: (session) => {
         return {
           url: ENDPOINT,
