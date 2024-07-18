@@ -119,7 +119,7 @@ export const TreatmentForm = ({ diagnostic, treatment, triggerComponent }: Props
           onSubmit: handleSubmit(mutateAppointment),
         }}
       >
-        <DialogTitle>{treatment?.id ? 'Editar' : 'Nueva'} cita médica</DialogTitle>
+        <DialogTitle>{treatment?.id ? 'Editar' : 'Nuevo'} tratamiento</DialogTitle>
         <DialogContent>
           <Stack padding={2} gap={2}>
             <Controller
