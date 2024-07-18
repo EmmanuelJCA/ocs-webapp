@@ -271,7 +271,7 @@ export const AppointmentForm = ({ appointment, triggerComponent }: Props) => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Médico"
+                      label="Paciente"
                       error={!!errors.patientId}
                       helperText={errors.patientId?.message}
                     />
