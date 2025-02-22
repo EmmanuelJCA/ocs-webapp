@@ -2,7 +2,7 @@
   "rewrites": [
     {
     "source": "/api/:path*",
-    "destination": "https://ocs-qk9fq.ondigitalocean.app/:path*"
+    "destination": "https://ocs-webapi.onrender.com/:path*"
     }
   ]
 }
